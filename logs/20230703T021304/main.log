@@ -1,0 +1,5 @@
+2023-07-03 02:13:05.246 [info] update#setState idle
+2023-07-03 02:13:14.362 [warning] No ptyHost heartbeat after 6 seconds
+2023-07-03 02:13:35.283 [info] update#setState checking for updates
+2023-07-03 02:13:35.595 [info] update#setState idle
+2023-07-03 02:15:06.013 [info] Extension host with pid 14573 exited with code: 0, signal: unknown.

@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,18 +11,26 @@
 |
 */
 
-Route::get('/', function () {
-    return view('login');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/login', function() {
+$this->get('/', function() {
   return view('login');
 });
 
-Route::get('/inventaire', function() {
-    return view('inventaire');
+$this->post('/authenticate', 'Auth\LoginController@authenticate');
+
+$this->get('/inventaire', 'Inventaire@index');
+$this->post('/importfile', 'Inventaire@importData');
+$this->get('/exportExcel', 'Inventaire@exportData');
+$this->get('/printPdf', 'Inventaire@generatePDF');
+
+$this->get('/testpdf', function() {
+  $liste = DB::table('element_detenteurs')->orderBy('number', 'ASC')->get();
+  return view('pdf')->with('liste', $liste);
 });
 
-Route::get('/dashboard', function() {
+$this->get('/dashboard', function() {
     return view('dashboard');
 });
