@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class VilleSeeder extends Seeder
 {
@@ -11,7 +12,7 @@ class VilleSeeder extends Seeder
      */
     public function run()
     {
-        DB:table('villes')->insert(
+        DB::table('villes')->insert([
             [
                 'id' => '1',
                 'id_region' => '1',
@@ -227,6 +228,6 @@ class VilleSeeder extends Seeder
                 'id_region' => '10',
                 'intitule' => 'Buea'
             ]            
-        );
+        ]);
     }
 }

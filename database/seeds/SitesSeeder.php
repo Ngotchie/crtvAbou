@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class SitesSeeder extends Seeder
 {
@@ -11,7 +12,7 @@ class SitesSeeder extends Seeder
      */
     public function run()
     {
-        DB:table('sites')->insert(
+        DB::table('sites')->insert([
 
             [
                 'id' => '1',
@@ -108,12 +109,6 @@ class SitesSeeder extends Seeder
                 'id_ville' => '6',
                 'id_region' => '2',
                 'intitule' => 'Centre de formation d’Ekounou'
-            ],
-            [
-                'id' => '16',
-                'id_ville' => '7',
-                'id_region' => '2',
-                'intitule' => 'Centre de diffusion d"\'"\Eséka'
             ],
             [
                 'id' => '17',
@@ -264,12 +259,6 @@ class SitesSeeder extends Seeder
                 'id_ville' => '12',
                 'id_region' => '2',
                 'intitule' => 'Station Régionale'
-            ],
-            [
-                'id' => '41',
-                'id_ville' => '12',
-                'id_region' => '2',
-                'intitule' => 'Station Régionale et FM '
             ],
             [
                 'id' => '42',
@@ -887,7 +876,19 @@ class SitesSeeder extends Seeder
                 'id_ville' => '43',
                 'id_region' => '10',
                 'intitule' => 'Station régionale et FM Buea'
-            ]               
-        );
+            ],
+            [
+                'id' => '145',
+                'id_ville' => '7',
+                'id_region' => '2',
+                'intitule' => 'Centre de diffusion d"\'"\Eséka'
+            ],           
+            [
+                'id' => '146',
+                'id_ville' => '12',
+                'id_region' => '2',
+                'intitule' => 'Station Régionale et FM '
+            ],
+        ]);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class TypesImmoSeeder extends Seeder
 {
@@ -11,7 +12,7 @@ class TypesImmoSeeder extends Seeder
      */
     public function run()
     {
-        DB:table('types_immo')->insert(
+        DB::table('type_immobilisations')->insert([
 
             [
                 'id' => '1',
@@ -167,6 +168,6 @@ class TypesImmoSeeder extends Seeder
                 'id_nns' => '201',
                 'intitule' => 'VEHICULE DE TOURISME'
             ]
-        );
+        ]);
     }
 }

@@ -17,7 +17,11 @@ class Inventaire extends Controller
     public function index()
     {
         $detenteurs = DB::table('element_detenteurs')->get();
-        return view ('inventaire')->with('detenteurs', $detenteurs); 
+        $regions = DB::table('regions')->get();
+        $villes = DB::table('villes')->get();
+        $sites = DB::table('sites')->get();
+        $typeImmos = DB::table('type_immobilisations')->get();
+        return view ('inventaire')->with(['detenteurs' => $detenteurs, 'regions' =>$regions, 'villes' => $villes, 'sites'=>$sites, 'typeImmos' => $typeImmos]); 
     
     }
 
