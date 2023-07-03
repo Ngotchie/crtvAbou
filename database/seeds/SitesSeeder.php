@@ -109,12 +109,7 @@ class SitesSeeder extends Seeder
                 'id_region' => '2',
                 'intitule' => 'Centre de formation d’Ekounou'
             ],
-            [
-                'id' => '16',
-                'id_ville' => '7',
-                'id_region' => '2',
-                'intitule' => 'Centre de diffusion d"\'"\Eséka'
-            ],
+            ,
             [
                 'id' => '17',
                 'id_ville' => '8',
@@ -887,7 +882,13 @@ class SitesSeeder extends Seeder
                 'id_ville' => '43',
                 'id_region' => '10',
                 'intitule' => 'Station régionale et FM Buea'
-            ]               
+            ],
+            [
+                'id' => '145',
+                'id_ville' => '7',
+                'id_region' => '2',
+                'intitule' => 'Centre de diffusion d"\'"\Eséka'
+            ]              
         );
     }
 }
