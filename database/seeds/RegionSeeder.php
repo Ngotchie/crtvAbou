@@ -12,7 +12,7 @@ class RegionSeeder extends Seeder
      */
     public function run()
     {
-        //
+        //$Sheet3.$D$3:F$302
         DB::table('regions')->insert([
             [
                 'id' => '1',
