@@ -9,13 +9,7 @@
                 height:3;
                 border:2;
             }
-            header .headerSection{
-                display:flex;
-                justify-content:space-between;
-            }
             footer{
-                display:flex;
-                justify-content:space-between;
                 margin-top: 10px;
                 margin-bottom: 20px;
             }
@@ -33,44 +27,38 @@
     </head>
     <body>
     <header>
-        <div class="headerSection">
-           <div>
-           <div style="line-height:0px; font-size: 0.675em;">
-             <center><h4>REPUBLIQUE DU CAMEROUN</h4><center>
-             <center><h5>Paix-Travail-Patrie</h5></center>
-             <center><h6>-------</h6></center>
-             <center><h4>MINISTERE DES FINANCES</h4><center>
-             <center><h6>-------</h6></center>
-             <center><h4>SECRETARIAT GENERAL</h4><center>
-             <center><h6>-------</h6></center>
-             <center><h4>DIRECTION DE LA NORMALISATION</h4><center>
-             <center><h4>ET DE LA COMPTABILITE-MATIERES</h4><center>
-             <center><h6>-------</h6></center>
+        <div class="headerSection" style="margin-top: 0px;">
+           <div style="line-height:5px; font-size: 0.675em; ">
+             <h4>REPUBLIQUE DU CAMEROUN</h4>
+             <h5 style="margin-left: 40px; margin-top: -5px">Paix-Travail-Patrie</h5>
+             <h6 style="margin-left: 60px; margin-top: -10px">-------</h6>
+             <h4>DIRECTION GENERAL DE LA CRTV</h4>
+             <h6 style="margin-left: 60px; margin-top: -5px">-------</h6>
+             <h4>DEPARTMENT DE LA COMPTABILITE MATIERE</h4>
+             <h6 style="margin-left: 60px; margin-top: -5px">-------</h6>
            </div>
-           </div>
-           <img src="assets/img/cameroun.png" width="150" height="150" alt="logo">
-           <div style="line-height:0px; font-size: 0.675em;">
-             <center><h4>REPUBLIC OF CAMEROON</h4><center>
-             <center><h5>Peace-Work-Fatherland</h5></center>
-             <center><h6>-------</h6></center>
-             <center><h4>MINISTRY OF FINANCE</h4><center>
-             <center><h6>-------</h6></center>
-             <center><h4>GENERAL SECRETARIAT</h4><center>
-             <center><h6>-------</h6></center>
-             <center><h4>DEPARTMENT OF SRANDARDISATION</h4><center>
-             <center><h4>AND STORIES ACCOUNTING</h4><center>
-             <center><h6>-------</h6></center>
+           <img style="margin-left: 35%; ; margin-top: -75px" src="assets/img/crtv.jpeg" width="300" height="200" alt="logo">
+           <div style="line-height:5px; font-size: 0.675em; float:right; margin-top: -125px">
+             <h4>REPUBLIC OF CAMEROON</h4>
+             <h5 style="margin-left: 40px; margin-top: -5px">Peace-Work-Fatherland</h5>
+             <h6 style="margin-left: 60px; margin-top: -10px">-------</h6>
+             <h4>DIRECTORATE GENERAL OF THE CRTV</h4>
+             <h6 style="margin-left: 60px; margin-top: -5px">-------</h6>
+             <h4>DEPARTMENT OF STORE ACCOUNTING</h4>
+             <h4> </h4>
+             <h6 style="margin-left: 60px; margin-top: -5px">-------</h6>
            </div>
         </div>
 
-        <hr />
+        <div style="margin-top: -150px;"><hr /></div>
         
-        <h2 style="margin-left: 40%;"><u>FICHE DE DETENTEUR</u></h2>
-        <ol style="margin-left: 38%;">
-            <li>CHAPITRE DUDGETAIRE: 20</li>
-            <li>POSTE DE COMPTABILITE-MATIERE: MINFI</li>
-            <li>LIBELE DU POSTE: DNCM</li>
+        <h2 style="margin-left: 37%;"><u>FICHE DE DETENTEUR EFFECTIF</u></h2>
+        <ol style="margin-left: 35%;">
+            <li>DEPARTMENT DE LA COMPTABILITE MATIERE: 2023</li>
+            <li>REGION: </li>
+            <li>VILLE: </li>
             <li>SITE:</li>
+            <li>DETENTEUR:</li>
         </ol>
         </header>
 
@@ -115,10 +103,10 @@
          </table>
         </main> 
           <!-- The footer contains the company's website and address. To align the address details we will use flexbox in the CSS style. -->
-        <footer>
-            <h4>L'ORDONATEUR MATIERES</h4>
-            <h4>LE COMPTABLE MATIERES</h4>
-            <h4>LE DETENTEUR EFFECTIF</h4>
+        <footer style="margin-top: 50px;">
+            <h4 style="margin-top: 20px">L'ORDONATEUR MATIERES</h4>
+            <h4 style="margin-left: 40%; margin-top: -40px">LE COMPTABLE MATIERES</h4>
+            <h4 style="float:right; margin-top: -50px">LE DETENTEUR EFFECTIF</h4>
         </footer>
     </body>
 </html>

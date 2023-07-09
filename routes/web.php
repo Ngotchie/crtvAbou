@@ -25,6 +25,7 @@ $this->get('/inventaire', 'Inventaire@index');
 $this->post('/importfile', 'Inventaire@importData');
 $this->get('/exportExcel', 'Inventaire@exportData');
 $this->get('/printPdf', 'Inventaire@generatePDF');
+$this->post('/filtre', 'Inventaire@filtreData');
 
 $this->get('/testpdf', function() {
   $liste = DB::table('element_detenteurs')->orderBy('number', 'ASC')->get();

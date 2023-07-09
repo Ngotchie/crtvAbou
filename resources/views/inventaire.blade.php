@@ -1,44 +1,54 @@
 @extends('base')
 @section('main')  
+@php
+   $r = "0";
+@endphp
 <div class="container-fluid px-4">
     <h1 class="mt-4">Inventaires</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item active">Détendeurs de matériels</li>
     </ol>
     <div class="d-flex" style="margin-bottom: 5px;">    
-    <form>
+    <form action="filtre" method="post">
         <div class="form-row align-items-center" style="margin-bottom: 10px;">
             <div class="col-auto my-1">
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Region</label>
-                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                    <option selected>Selectionner...</option>
+                <select onchange="region_func()" name="region" class="custom-select mr-sm-2" id="region">
+                    <option value="-1" selected>Selectionner...</option>
                     @foreach ($regions as $region)
                     <option value='{{$region->id}}'>{{ $region->intitule }}</option>
                     @endforeach
                 </select>
             </div>
-            <div class="col-auto my-1">
+            <div class="col-auto my-1" style="display: none;" id="listeville">
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Ville</label>
-                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                    <option selected>Selectionner...</option>
+                <select name="ville" class="custom-select mr-sm-2" id="ville">
+                    <option value="" selected>Selectionner...</option>
                     @foreach ($villes as $ville)
                     <option value='{{$ville->id}}'>{{ $ville->intitule }}</option>
                     @endforeach
                 </select>
             </div>
-            <div class="col-auto my-1">
+            <div class="col-auto my-1" style="display: none;">
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Site</label>
-                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                    <option selected>Selectionner...</option>
+                <select name="site" class="custom-select mr-sm-2" id="site">
+                    <option value="" selected>Selectionner...</option>
                     @foreach ($sites as $site)
                     <option value='{{$site->id}}'>{{ $site->intitule }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="col-auto my-1">
+                <label class="mr-sm-2" for="inlineFormCustomSelect">Détenteur</label>
+                <select name="detenteur" class="custom-select mr-sm-2" id="détenteur">
+                    <option value="" selected>Selectionner...</option>
+                    <option value="1">One</option>
+                </select>
+            </div>
+            <div class="col-auto my-1">
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Type immobilisation</label>
-                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                    <option selected>Selectionner...</option>
+                <select name="typeImmo" class="custom-select mr-sm-2" id="typeImmo">
+                    <option value="" selected>Selectionner...</option>
                     @foreach ($typeImmos as $typeImmo)
                     <option value='{{$typeImmo->id}}'>{{ $typeImmo->intitule }}</option>
                     @endforeach
@@ -46,8 +56,8 @@
             </div>
             <div class="col-auto my-1">
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Nommenclature classe</label>
-                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                    <option selected>Selectionner...</option>
+                <select name="nommen" class="custom-select mr-sm-2" id="nommen">
+                    <option value="" selected>Selectionner...</option>
                     <option value="1">One</option>
                     <option value="2">Two</option>
                     <option value="3">Three</option>
@@ -55,13 +65,14 @@
             </div>
             <div class="col-auto my-1">
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Ammortissement</label>
-                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                    <option selected>Selectionner...</option>
+                <select name="ammort" class="custom-select mr-sm-2" id="ammort">
+                    <option value="" selected>Selectionner...</option>
                     <option value="1">Bon</option>
                     <option value="2">OBSELETE</option>
                     <option value="3">A REFORMER</option>
                 </select>
             </div>
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="col-auto my-1">
             <button style="margin-top: 30px;" type="submit" class="btn btn-success">Filtrer</button>
             </div>
@@ -75,8 +86,8 @@
         </div>
         <div class="card-body">        
             <div class="d-flex" style="margin-bottom: 5px;">    
-                    <!-- <a href="{{url('printPdf')}}" class="btn btn-secondary btn-sm" style="margin-left:40%">Export PDF</a> -->
-                    <a href="{{url('testpdf')}}" class="btn btn-secondary btn-sm" style="margin-left:40%">Export PDF</a>
+                    <a href="{{url('printPdf')}}" class="btn btn-secondary btn-sm" style="margin-left:40%">Export PDF</a>
+                    <!-- <a href="javascript:printPdf()" class="btn btn-secondary btn-sm" style="margin-left:40%">Export PDF</a> -->
                     
                     <a href="{{url('exportExcel')}}" class="btn btn-primary btn-sm" style="margin-left:5px">Export Excel</a>
             </div>
@@ -145,3 +156,21 @@
     </div>
 </div>
 @endsection
+<script>
+    function printPdf() {
+        alert(123)
+    }
+    function region_func() {
+        var $v = $("#region").val();
+        if($v !== "-1") {
+            $v = Number($v);
+            document.cookie = "p = " + $v;
+            document.getElementById('listeville').innerHTML = '';
+            var testDiv = document.getElementById("listeville");
+            testDiv.innerHTML = '<label class="mr-sm-2" for="inlineFormCustomSelect">Ville</label> <select name="ville" class="custom-select mr-sm-2" id="ville"><option value="" selected>Selectionner...</option>@foreach ($villes as $ville) @php @endphp @if($r=='+$v+')<option value={{$ville->id}}>{{ $ville->intitule }} </option> @endif @endforeach</select>';
+            document.getElementById('listeville').style.display ='block';
+        }else{
+            document.getElementById('listeville').style.display ='none';
+        }
+    }
+</script>
