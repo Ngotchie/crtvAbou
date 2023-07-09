@@ -37,7 +37,8 @@ class Inventaire extends Controller
             $sheet        = $spreadsheet->getActiveSheet();
             $row_limit    = $sheet->getHighestDataRow();
             $column_limit = $sheet->getHighestDataColumn();
-            $row_range    = range( 3, $row_limit );
+            // $row_range    = range( 3, $row_limit );
+            $row_range    = range( 3, 15);
 
             $column_range = range( 'AA', $column_limit );
             $startcount = 2;
@@ -110,7 +111,7 @@ class Inventaire extends Controller
      *
      * @return \Illuminate\Http\Response
     */
-    public function generatePDF()
+    public function generatePDF(Request $request)
     {
         $liste = DB::table('element_detenteurs')->orderBy('number', 'ASC')->get();
         $file_name = date("Y.m.d")."_ListeDetenteur.pdf";
@@ -128,8 +129,55 @@ class Inventaire extends Controller
             "dpi" => 130
         ]);
 
-        $pdf = PDF::loadView('pdf', $data);
+        $pdf = PDF::loadView('pdf', $data)->setPaper('a4', 'landscape');;
     
         return $pdf->download($file_name);
+    }
+        
+    public function filtreData(Request $request) 
+    {
+        $region = $request->get('region');
+        $ville = $request->get('ville');
+        $site = $request->get('site');
+        $detenteur = $request->get('detenteur');
+        $typeImmo = $request->get('typeImmo');
+        $nommen = $request->get('nommen');
+        $ammort = $request->get('ammort');
+
+         $query = DB::table('element_detenteurs');
+         if($region != ""){
+            $query->where('region', '=', $region);
+         }
+         if($region != ""){
+            $query->where('ville', '=', $ville);
+         }
+         if($region != ""){
+            $query->where('site', '=', $site);
+         }
+         if($region != ""){
+            $query->where('nom_agent_collecteur', '=', $detenteur);
+         }
+         if($region != ""){
+            $query->where('type_dimmobilisation', '=', $typeImmo);
+         }
+         if($region != ""){
+            $query->where('nns', '=', $nommen);
+         }
+         if($region != ""){
+            $query->where('valeur_amortissement', '=', $ammort);
+         }
+  
+        $detenteurs = $query->orderBy('number', 'ASC')->get();
+
+        $regions = DB::table('regions')->get();
+        $villes = DB::table('villes')->get();
+        $sites = DB::table('sites')->get();
+        $typeImmos = DB::table('type_immobilisations')->get();
+        return view ('inventaire')->with(['detenteurs' => $detenteurs, 'regions' =>$regions, 'villes' => $villes, 'sites'=>$sites, 'typeImmos' => $typeImmos,
+        'region', $region]); 
+    
+
+        
+        
     }
 }

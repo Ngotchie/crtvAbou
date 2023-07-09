@@ -62,7 +62,8 @@
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="/inventaire">Liste des détentions</a>
-                                    <a class="nav-link" href="#">Ajouter un élément</a>
+                                    <a class="nav-link" href="#">Ajouter une détention</a>
+                                    <a class="nav-link" href="#">Nouveau détenteur</a>
                                     <a class="nav-link" href="#"><button style="height:40px; width:250px; color:white; background-color: black;" type="button" data-toggle="modal" data-target="#demoModal">Importer un fichier</button></a>
                                 </nav>
                             </div>
