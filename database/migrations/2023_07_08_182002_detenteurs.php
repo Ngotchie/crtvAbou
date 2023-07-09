@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class TypeImmobilisations extends Migration
+class Detenteurs extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class TypeImmobilisations extends Migration
      */
     public function up()
     {
-        Schema::create('type_immobilisations', function (Blueprint $table) {
+        Schema::create('detenteurs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('intitule')->nullable();
-            $table->unsignedInteger('id_nns')->nullable();
+            $table->string('nom')->nullable();
         });
     }
 
@@ -27,6 +26,6 @@ class TypeImmobilisations extends Migration
      */
     public function down()
     {
-        Schema::drop('type_immobilisations');
+        Schema::drop('detenteurs');//
     }
 }

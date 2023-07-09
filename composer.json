@@ -10,7 +10,7 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.6.*",
         "laravel/tinker": "^1.0",
-        "phpoffice/phpspreadsheet": "^1.19"
+        "phpoffice/phpspreadsheet": "^1.0@beta"
     },
     "require-dev": {
         "filp/whoops": "^2.0",

@@ -108,7 +108,7 @@ class SitesSeeder extends Seeder
                 'id' => '16',
                 'id_ville' => '6',
                 'id_region' => '2',
-                'intitule' => 'Centre de formation d’Ekounou'
+                'intitule' => 'Centre de formation d"\’"\Ekounou'
             ],
             [
                 'id' => '17',
@@ -720,7 +720,7 @@ class SitesSeeder extends Seeder
                 'id' => '118',
                 'id_ville' => '37',
                 'id_region' => '9',
-                'intitule' => 'Centre de diffusion d’Ebolowa'
+                'intitule' => 'Centre de diffusion d"\’"\Ebolowa'
             ],
             [
                 'id' => '119',

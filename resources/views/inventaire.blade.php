@@ -94,28 +94,40 @@
             <table id="datatablesSimple">
                 <thead>
                     <tr>
-                        <th>NNS</th>
-                        <th>Assit Number</th>
-                        <th>Title</th>
+                    <th>NNS</th>
+                        <th>Asset Number</th>
+                        <th>Designation des Matières</th>
                         <th>Description</th>
                         <th>Date Acquisition</th>
                         <th>Number</th>
                         <th>Qte</th>
-                        <th>P U</th>
+                        <th>P.U</th>
                         <th>Valeur</th>
+                        <th>Date Affectation</th>
+                        <th>Lieu Affectation</th>
+                        <th>Taux d'Ammortisement</th>
+                        <th>Durée de Vie</th>
+                        <th>Date d'Ammortissement</th>
+                        <th>Observations</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
                         <th>NNS</th>
-                        <th>Assit Number</th>
-                        <th>Title</th>
+                        <th>Asset Number</th>
+                        <th>Designation des Matières</th>
                         <th>Description</th>
                         <th>Date Acquisition</th>
                         <th>Number</th>
                         <th>Qte</th>
-                        <th>P U</th>
+                        <th>P.U</th>
                         <th>Valeur</th>
+                        <th>Date Affectation</th>
+                        <th>Lieu Affectation</th>
+                        <th>Taux d'Ammortisement</th>
+                        <th>Durée de Vie</th>
+                        <th>Date d'Ammortissement</th>
+                        <th>Observations</th>
                     </tr>
                 </tfoot>
                 <tbody>
@@ -127,9 +139,15 @@
                         <td>{{ $detenteur->observation }}</td>
                         <td>{{ $detenteur->date_acquisition }}</td>
                         <td>{{ $detenteur->number }}</td>
+                        <td>{{ $detenteur->valeur_selon_fiche }}</td>
                         <td>{{ $detenteur->quantite }}</td>
                         <td>{{ $detenteur->valeur_origine }}</td>
-                        <td>{{ $detenteur->valeur }}</td>
+                        <td>{{ $detenteur->date_mise_en_service }}</td>
+                        <td>{{ $detenteur->departement }}</td>
+                        <td>{{ $detenteur->taux_amortissement }}</td>
+                        <td>{{ $detenteur->duree_de_vie }}</td>
+                        <td>{{ $detenteur->date_amortissement }}</td>
+                        <td>{{ $detenteur->observation }}</td>
                     </tr>
                     @endforeach
                 </tbody>

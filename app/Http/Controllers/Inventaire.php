@@ -37,8 +37,7 @@ class Inventaire extends Controller
             $sheet        = $spreadsheet->getActiveSheet();
             $row_limit    = $sheet->getHighestDataRow();
             $column_limit = $sheet->getHighestDataColumn();
-            // $row_range    = range( 3, $row_limit );
-            $row_range    = range( 3, 15);
+        $row_range    = range( 3, /*$row_limit*/40 );
 
             $column_range = range( 'AA', $column_limit );
             $startcount = 2;
@@ -49,8 +48,31 @@ class Inventaire extends Controller
                     'region' => $sheet->getCell( 'E' . $row )->getValue(),
                     'ville' => $sheet->getCell( 'F' . $row )->getValue(),
                     'site' => $sheet->getCell( 'G' . $row )->getValue(),
-                    'title' => $sheet->getCell( 'K' . $row )->getValue(),
-                    'number' =>$sheet->getCell( 'AA' . $row )->getValue(),
+                    'title' => $sheet->getCell( 'L' . $row )->getValue(),
+                    'entite' =>$sheet->getCell( 'H' . $row )->getValue(),
+                    'departement' =>$sheet->getCell( 'I' . $row )->getValue(),
+                    'emplacement' =>$sheet->getCell( 'J' . $row )->getValue(),
+                    'nns' =>$sheet->getCell( 'K' . $row )->getValue(),
+                    'number' =>$sheet->getCell( 'AB' . $row )->getValue(),
+                    'nom_article' =>$sheet->getCell( 'AC' . $row )->getValue(),
+                    'type_dimmobilisation' =>$sheet->getCell( 'AD' . $row )->getValue(),
+                    'statut_de_larticle' =>$sheet->getCell( 'AE' . $row )->getValue(),
+                    'nom_agent_collecteur' =>$sheet->getCell( 'AF' . $row )->getValue(),
+                    'date_mise_en_service' =>$sheet->getCell( 'BO' . $row )->getValue(),
+                    'valeur_selon_fiche' =>$sheet->getCell( 'BP' . $row )->getValue(),
+                    'source' =>$sheet->getCell( 'BQ' . $row )->getValue(),
+                    'ligne_annexe' =>$sheet->getCell( 'BR' . $row )->getValue(),
+                    'valeur_origine' =>$sheet->getCell( 'BS' . $row )->getValue(),
+                    'date_mes_cptable' =>$sheet->getCell( 'BT' . $row )->getValue(),
+                    'taux_amortissement' =>$sheet->getCell( 'BU' . $row )->getValue(),
+                    'duree_de_vie' =>$sheet->getCell( 'BV' . $row )->getValue(),
+                    'date_amortissement' =>$sheet->getCell( 'BW' . $row )->getValue(),
+                    'cumul_dotations_2017' =>$sheet->getCell( 'BX' . $row )->getValue(),
+                    'vnc_2017' =>$sheet->getCell( 'BY' . $row )->getValue(),
+                    'cumul_dotations_2018' =>$sheet->getCell( 'BY' . $row )->getValue(),
+                    'vnc_2018' =>$sheet->getCell( 'CA' . $row )->getValue(),
+                    'valeur_a_dire_experts' =>$sheet->getCell( 'CB' . $row )->getValue(),
+                    'ecart_de_reevaluation' =>$sheet->getCell( 'CC' . $row )->getValue()
                 ];
                 $startcount++;
             }
