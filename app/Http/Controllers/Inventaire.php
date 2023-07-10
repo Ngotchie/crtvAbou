@@ -18,10 +18,8 @@ class Inventaire extends Controller
     {
         $detenteurs = DB::table('element_detenteurs')->get();
         $regions = DB::table('regions')->get();
-        $villes = DB::table('villes')->get();
-        $sites = DB::table('sites')->get();
         $typeImmos = DB::table('type_immobilisations')->get();
-        return view ('inventaire')->with(['detenteurs' => $detenteurs, 'regions' =>$regions, 'villes' => $villes, 'sites'=>$sites, 'typeImmos' => $typeImmos]); 
+        return view ('inventaire')->with(['detenteurs' => $detenteurs, 'regions' =>$regions, 'typeImmos' => $typeImmos]); 
     
     }
 
@@ -170,36 +168,30 @@ class Inventaire extends Controller
          if($region != ""){
             $query->where('region', '=', $region);
          }
-         if($region != ""){
+         if($ville != ""){
             $query->where('ville', '=', $ville);
          }
-         if($region != ""){
+         if($site != ""){
             $query->where('site', '=', $site);
          }
-         if($region != ""){
+         if($detenteur != ""){
             $query->where('nom_agent_collecteur', '=', $detenteur);
          }
-         if($region != ""){
+         if($typeImmo != ""){
             $query->where('type_dimmobilisation', '=', $typeImmo);
          }
-         if($region != ""){
+         if($nommen != ""){
             $query->where('nns', '=', $nommen);
          }
-         if($region != ""){
+         if($ammort != ""){
             $query->where('valeur_amortissement', '=', $ammort);
          }
   
         $detenteurs = $query->orderBy('number', 'ASC')->get();
 
         $regions = DB::table('regions')->get();
-        $villes = DB::table('villes')->get();
-        $sites = DB::table('sites')->get();
         $typeImmos = DB::table('type_immobilisations')->get();
-        return view ('inventaire')->with(['detenteurs' => $detenteurs, 'regions' =>$regions, 'villes' => $villes, 'sites'=>$sites, 'typeImmos' => $typeImmos,
-        'region', $region]); 
-    
-
-        
+        return view ('inventaire')->with(['detenteurs' => $detenteurs, 'regions' =>$regions, 'typeImmos' => $typeImmos]); 
         
     }
 }

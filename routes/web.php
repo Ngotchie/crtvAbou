@@ -24,8 +24,10 @@ $this->post('/authenticate', 'Auth\LoginController@authenticate');
 $this->get('/inventaire', 'Inventaire@index');
 $this->post('/importfile', 'Inventaire@importData');
 $this->get('/exportExcel', 'Inventaire@exportData');
-$this->get('/printPdf', 'Inventaire@generatePDF');
+$this->post('/printPdf', 'Inventaire@generatePDF');
 $this->post('/filtre', 'Inventaire@filtreData');
+$this->get('/villes/{id}', 'FiltreController@getVilles');
+$this->get('/sites/{id}', 'FiltreController@getSites');
 
 $this->get('/testpdf', function() {
   $liste = DB::table('element_detenteurs')->orderBy('number', 'ASC')->get();

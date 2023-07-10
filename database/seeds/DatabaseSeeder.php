@@ -13,11 +13,11 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UsersTableSeeder::class);
         $this->call([
-             UserSeeder::class,
-             RegionSeeder::class,
-             VilleSeeder::class,
+             // UserSeeder::class,
+             // RegionSeeder::class,
+             // VilleSeeder::class,
              TypesImmoSeeder::class,
-             DetenteurSeeder::class,
+             // DetenteurSeeder::class,
              NnsSeeder::class,
              SitesSeeder::class
         ]);

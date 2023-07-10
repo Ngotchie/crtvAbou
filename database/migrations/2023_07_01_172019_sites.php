@@ -18,7 +18,7 @@ class Sites extends Migration
             $table->string('intitule')->nullable();
             $table->unsignedInteger('id_region')->nullable();;
             $table->unsignedInteger('id_ville')->nullable();;
-            /*$table->foreign('id_ville')
+            $table->foreign('id_ville')
             ->references('id')
             ->on('villes')
             ->onDelete('restrict')
@@ -27,7 +27,7 @@ class Sites extends Migration
             ->references('id')
             ->on('regions')
             ->onDelete('restrict')
-            ->onUpdate('cascade');*/
+            ->onUpdate('cascade');
         });
     }
 
