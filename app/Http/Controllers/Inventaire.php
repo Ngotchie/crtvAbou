@@ -19,7 +19,10 @@ class Inventaire extends Controller
         $detenteurs = DB::table('element_detenteurs')->get();
         $regions = DB::table('regions')->get();
         $typeImmos = DB::table('type_immobilisations')->get();
-        return view ('inventaire')->with(['detenteurs' => $detenteurs, 'regions' =>$regions, 'typeImmos' => $typeImmos]); 
+        $personnes = DB::table('detenteurs')->get();
+        $nns = DB::table('nns')->get();
+        return view ('inventaire')->with(['detenteurs' => $detenteurs, 'regions' =>$regions, 'typeImmos' => $typeImmos, 
+                                          'personnes' => $personnes, 'nns' => $nns]); 
     
     }
 
@@ -165,33 +168,42 @@ class Inventaire extends Controller
         $ammort = $request->get('ammort');
 
          $query = DB::table('element_detenteurs');
-         if($region != ""){
-            $query->where('region', '=', $region);
+         if($region != "-1"){
+            $lib_region = DB::table('regions')->where('id', '=', $region)->value('intitule');
+            $query->whereRaw('LOWER(region) = (?)', [strtolower($lib_region)])->where('region', '=', $lib_region);
          }
-         if($ville != ""){
-            $query->where('ville', '=', $ville);
+         if($ville != "-1"){
+            $lib_ville = DB::table('villes')->where('id', '=', $ville)->value('intitule');
+            $query->whereRaw('LOWER(ville) = (?)', [strtolower($lib_ville)])->where('ville', '=', $lib_ville);
          }
-         if($site != ""){
-            $query->where('site', '=', $site);
+         if($site != "-1"){
+            $lib_site = DB::table('sites')->where('id', '=', $site)->value('intitule');
+            $query->where('site', '=', $lib_site);
          }
-         if($detenteur != ""){
-            $query->where('nom_agent_collecteur', '=', $detenteur);
+         if($detenteur != "-1"){
+            $det = DB::table('detenteurs')->where('id', '=', $detenteur)->value('nom');
+            $query->where('nom_agent_collecteur', '=', $det);
          }
-         if($typeImmo != ""){
-            $query->where('type_dimmobilisation', '=', $typeImmo);
+         if($typeImmo != "-1"){
+            $lib_ti = DB::table('type_immobilisations')->where('id', '=', $typeImmo)->value('intitule');
+            $query->where('type_dimmobilisation', '=', $lib_ti);
          }
-         if($nommen != ""){
-            $query->where('nns', '=', $nommen);
+         if($nommen != "-1"){
+            $lib_nom = DB::table('nns')->where('id', '=', $nommen)->value('intitule');
+            $query->where('nns', '=', $lib_nom);
          }
-         if($ammort != ""){
+         if($ammort != "-1"){
             $query->where('valeur_amortissement', '=', $ammort);
          }
   
         $detenteurs = $query->orderBy('number', 'ASC')->get();
 
+        $personnes = DB::table('detenteurs')->get();
+        $nns = DB::table('nns')->get();
         $regions = DB::table('regions')->get();
         $typeImmos = DB::table('type_immobilisations')->get();
-        return view ('inventaire')->with(['detenteurs' => $detenteurs, 'regions' =>$regions, 'typeImmos' => $typeImmos]); 
+        return view ('inventaire')->with(['detenteurs' => $detenteurs, 'regions' =>$regions, 'typeImmos' => $typeImmos, 
+                                          'personnes' => $personnes, 'nns' => $nns]); 
         
     }
 }

@@ -23,49 +23,53 @@
             <div class="col-auto my-1" id="listeville">
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Ville</label>
                 <select onchange="ville_func()" name="ville" class="custom-select mr-sm-2" id="ville">
-                    <option value="" selected>Selectionner...</option>
+                    <option value="-1" selected>Selectionner...</option>
                 </select>
             </div>
             <div class="col-auto my-1">
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Site</label>
                 <select name="site" class="custom-select mr-sm-2" id="site">
-                    <option value="" selected>Selectionner...</option>
+                    <option value="-1" selected>Selectionner...</option>
                 </select>
             </div>
             <div class="col-auto my-1">
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Détenteur</label>
                 <select name="detenteur" class="custom-select mr-sm-2" id="détenteur">
-                    <option value="" selected>Selectionner...</option>
-                    <option value="1">One</option>
+                    <option value="-1" selected>Selectionner...</option>
+                    @foreach ($personnes as $personne)
+                    <option value='{{$personne->id}}'>{{ $personne->nom }}</option>
+                    @endforeach
+                </select>
                 </select>
             </div>
             <div class="col-auto my-1">
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Type immobilisation</label>
                 <select name="typeImmo" class="custom-select mr-sm-2" id="typeImmo">
-                    <option value="" selected>Selectionner...</option>
+                    <option value="-1" selected>Selectionner...</option>
                     @foreach ($typeImmos as $typeImmo)
                     <option value='{{$typeImmo->id}}'>{{ $typeImmo->intitule }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="col-auto my-1">
-                <label class="mr-sm-2" for="inlineFormCustomSelect">Nommenclature classe</label>
-                <select name="nommen" class="custom-select mr-sm-2" id="nommen">
-                    <option value="" selected>Selectionner...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
-            </div>
-            <div class="col-auto my-1">
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Ammortissement</label>
                 <select name="ammort" class="custom-select mr-sm-2" id="ammort">
-                    <option value="" selected>Selectionner...</option>
+                    <option value="-1" selected>Selectionner...</option>
                     <option value="1">Bon</option>
                     <option value="2">OBSELETE</option>
                     <option value="3">A REFORMER</option>
                 </select>
             </div>
+            <div class="col-auto my-1">
+                <label class="mr-sm-2" for="inlineFormCustomSelect">Nommenclature classe</label>
+                <select name="nommen" class="custom-select mr-sm-2" id="nommen">
+                    <option value="-1" selected>Selectionner...</option>
+                    @foreach ($nns as $nn)
+                    <option value='{{$nn->id}}'>{{ $nn->intitule }}</option>
+                    @endforeach
+                </select>
+            </div>
+           
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="col-auto my-1">
             <button style="margin-top: 30px;" type="submit" class="btn btn-success">Filtrer</button>
@@ -204,7 +208,7 @@
             }).then(response => response.json())
                 .then(data => {
                 $("#site").empty();
-                $("#site").append('<option value="">Selectionner...</option>');
+                $("#site").append('<option value="-1">Selectionner...</option>');
                 $.each(data, function (index, value) {
                     $("#site").append('<option value="' + value.id + '">' + data[index].intitule + ' </option>');
 
@@ -216,7 +220,7 @@
         }else{
             // document.getElementById('listesite').style.display ='none';
             $("#site").empty();
-            $("#site").append('<option value="">Selectionner...</option>');
+            $("#site").append('<option value="-1">Selectionner...</option>');
         }
     }
     
