@@ -15,43 +15,43 @@ class RegionSeeder extends Seeder
         //$Sheet3.$D$3:F$302
         DB::table('regions')->insert([
             [
-                'id' => '1',
+                'id' => 1,
                 'intitule' => 'ADAMAOUA'
             ],
             [
-                'id' => '2',
+                'id' => 2,
                 'intitule' => 'CENTRE'
             ],
             [
-                'id' => '3',
+                'id' => 3,
                 'intitule' => 'EST'
             ],
             [
-                'id' => '4',
+                'id' => 4,
                 'intitule' => 'EXTREME-NORD'
             ],
             [
-                'id' => '5',
+                'id' => 5,
                 'intitule' => 'LITORAL'
             ],
             [
-                'id' => '6',
+                'id' => 6,
                 'intitule' => 'NORD'
             ],
             [
-                'id' => '7',
+                'id' => 7,
                 'intitule' => 'NORD-OUEST'
             ],
             [
-                'id' => '8',
+                'id' => 8,
                 'intitule' => 'OUEST'
             ],
             [
-                'id' => '9',
+                'id' => 9,
                 'intitule' => 'SUD'
             ],
             [
-                'id' => '10',
+                'id' => 10,
                 'intitule' => 'SUD-OUEST'
             ]
         ]);

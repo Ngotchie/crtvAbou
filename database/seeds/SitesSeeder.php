@@ -63,77 +63,77 @@ class SitesSeeder extends Seeder
                 'intitule' => 'Station Régionale'
             ],
             [
-                'id' => '9',
-                'id_ville' => '3',
-                'id_region' => '1',
+                'id' => 9,
+                'id_ville' => 3,
+                'id_region' => 1,
                 'intitule' => 'Station régionale /FM'
             ],
             [
-                'id' => '10',
-                'id_ville' => '3',
-                'id_region' => '1',
+                'id' => 10,
+                'id_ville' => 3,
+                'id_region' => 1,
                 'intitule' => 'Station Regionale de Ngaoundere'
             ],
             [
-                'id' => '11',
-                'id_ville' => '4',
-                'id_region' => '1',
+                'id' => 11,
+                'id_ville' => 4,
+                'id_region' => 1,
                 'intitule' => 'Centre de Diffusion'
             ],
             [
-                'id' => '12',
-                'id_ville' => '4',
-                'id_region' => '1',
+                'id' => 12,
+                'id_ville' => 4,
+                'id_region' => 1,
                 'intitule' => 'Centre de diffusion FM TV TIBATI'
             ],
             [
-                'id' => '13',
-                'id_ville' => '4',
-                'id_region' => '1',
+                'id' => 13,
+                'id_ville' => 4,
+                'id_region' => 1,
                 'intitule' => 'Centre de Diffusion FM/TV'
             ],
             [
-                'id' => '14',
-                'id_ville' => '5',
-                'id_region' => '2',
+                'id' => 14,
+                'id_ville' => 5,
+                'id_region' => 2,
                 'intitule' => 'centre de diffusion bafia'
             ],
             [
-                'id' => '15',
-                'id_ville' => '5',
-                'id_region' => '2',
+                'id' => 15,
+                'id_ville' => 5,
+                'id_region' => 2,
                 'intitule' => 'Centre de diffusion de Bafia'
             ],
             [
-                'id' => '16',
-                'id_ville' => '6',
-                'id_region' => '2',
+                'id' => 16,
+                'id_ville' => 6,
+                'id_region' => 2,
                 'intitule' => 'Centre de formation d"\’"\Ekounou'
             ],
             [
-                'id' => '17',
-                'id_ville' => '8',
-                'id_region' => '2',
+                'id' => 17,
+                'id_ville' => 8,
+                'id_region' => 2,
                 'intitule' => 'centre de diffusion de mbankolo'
             ],
             [
-                'id' => '18',
-                'id_ville' => '9',
-                'id_region' => '2',
+                'id' => 18,
+                'id_ville' => 9,
+                'id_region' => 2,
                 'intitule' => 'Centre de diffusion de Nanga-Eboko'
             ],
             [
-                'id' => '19',
-                'id_ville' => '9',
-                'id_region' => '2',
+                'id' => 19,
+                'id_ville' => 9,
+                'id_region' => 2,
                 'intitule' => 'centre de diffusion nanga eboko'
             ],
             [
-                'id' => '20',
-                'id_ville' => '10',
-                'id_region' => '2',
+                'id' => 20,
+                'id_ville' => 10,
+                'id_region' => 2,
                 'intitule' => 'Centre de diffusion de Ndom'
-            ],
+            ]/*,
             [
                 'id' => '21',
                 'id_ville' => '11',
@@ -888,7 +888,7 @@ class SitesSeeder extends Seeder
                 'id_ville' => '12',
                 'id_region' => '2',
                 'intitule' => 'Station Régionale et FM '
-            ],
+            ],*/
         ]);
     }
 }
