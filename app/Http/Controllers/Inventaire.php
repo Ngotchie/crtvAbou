@@ -135,7 +135,7 @@ class Inventaire extends Controller
     */
     public function generatePDF(Request $request)
     {
-        $liste = DB::table('element_detenteurs')->orderBy(length('number'), 'ASC')->get();
+        $liste = DB::table('element_detenteurs')->orderBy('id', 'ASC')->get();
         $file_name = date("Y.m.d")."_ListeDetenteur.pdf";
 
         $data = [
