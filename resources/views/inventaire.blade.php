@@ -20,58 +20,56 @@
                     @endforeach
                 </select>
             </div>
-            <div class="col-auto my-1" style="display: none;" id="listeville">
+            <div class="col-auto my-1" id="listeville">
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Ville</label>
-                <select name="ville" class="custom-select mr-sm-2" id="ville">
-                    <option value="" selected>Selectionner...</option>
-                    @foreach ($villes as $ville)
-                    <option value='{{$ville->id}}'>{{ $ville->intitule }}</option>
-                    @endforeach
+                <select onchange="ville_func()" name="ville" class="custom-select mr-sm-2" id="ville">
+                    <option value="-1" selected>Selectionner...</option>
                 </select>
             </div>
-            <div class="col-auto my-1" style="display: none;">
+            <div class="col-auto my-1">
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Site</label>
                 <select name="site" class="custom-select mr-sm-2" id="site">
-                    <option value="" selected>Selectionner...</option>
-                    @foreach ($sites as $site)
-                    <option value='{{$site->id}}'>{{ $site->intitule }}</option>
-                    @endforeach
+                    <option value="-1" selected>Selectionner...</option>
                 </select>
             </div>
             <div class="col-auto my-1">
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Détenteur</label>
                 <select name="detenteur" class="custom-select mr-sm-2" id="détenteur">
-                    <option value="" selected>Selectionner...</option>
-                    <option value="1">One</option>
+                    <option value="-1" selected>Selectionner...</option>
+                    @foreach ($personnes as $personne)
+                    <option value='{{$personne->id}}'>{{ $personne->nom }}</option>
+                    @endforeach
+                </select>
                 </select>
             </div>
             <div class="col-auto my-1">
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Type immobilisation</label>
                 <select name="typeImmo" class="custom-select mr-sm-2" id="typeImmo">
-                    <option value="" selected>Selectionner...</option>
+                    <option value="-1" selected>Selectionner...</option>
                     @foreach ($typeImmos as $typeImmo)
                     <option value='{{$typeImmo->id}}'>{{ $typeImmo->intitule }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="col-auto my-1">
-                <label class="mr-sm-2" for="inlineFormCustomSelect">Nommenclature classe</label>
-                <select name="nommen" class="custom-select mr-sm-2" id="nommen">
-                    <option value="" selected>Selectionner...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
-            </div>
-            <div class="col-auto my-1">
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Ammortissement</label>
                 <select name="ammort" class="custom-select mr-sm-2" id="ammort">
-                    <option value="" selected>Selectionner...</option>
+                    <option value="-1" selected>Selectionner...</option>
                     <option value="1">Bon</option>
                     <option value="2">OBSELETE</option>
                     <option value="3">A REFORMER</option>
                 </select>
             </div>
+            <div class="col-auto my-1">
+                <label class="mr-sm-2" for="inlineFormCustomSelect">Nommenclature classe</label>
+                <select name="nommen" class="custom-select mr-sm-2" id="nommen">
+                    <option value="-1" selected>Selectionner...</option>
+                    @foreach ($nns as $nn)
+                    <option value='{{$nn->id}}'>{{ $nn->intitule }}</option>
+                    @endforeach
+                </select>
+            </div>
+           
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="col-auto my-1">
             <button style="margin-top: 30px;" type="submit" class="btn btn-success">Filtrer</button>
@@ -86,8 +84,8 @@
         </div>
         <div class="card-body">        
             <div class="d-flex" style="margin-bottom: 5px;">    
-                    <a href="{{url('printPdf')}}" class="btn btn-secondary btn-sm" style="margin-left:40%">Export PDF</a>
-                    <!-- <a href="javascript:printPdf()" class="btn btn-secondary btn-sm" style="margin-left:40%">Export PDF</a> -->
+                    <!-- <a href="{{url('printPdf')}}" class="btn btn-secondary btn-sm" style="margin-left:40%">Export PDF</a> -->
+                    <a href="javascript:printPdf()" class="btn btn-secondary btn-sm" style="margin-left:40%">Export PDF</a>
                     
                     <a href="{{url('exportExcel')}}" class="btn btn-primary btn-sm" style="margin-left:5px">Export Excel</a>
             </div>
@@ -157,20 +155,73 @@
 </div>
 @endsection
 <script>
-    function printPdf() {
-        alert(123)
+    async function printPdf() {
+        var $r = $("#region").val();
+        var $v = $("#ville").val();
+        var $s = $("#site").val();
+        var $d = $("#detenteur").val();
+        var $t = $("#typeImmo").val();
+        var $n = $("#nommen").val();
+        var $a = $("#ammort").val();
+        await fetch('/printPdf', {
+            method: "POST", 
+            body: {
+                "region": $r,
+                "ville": $v,
+                "site": $s,
+                "detenteur": $d,
+                "typeImmo": $t,
+                "nommen": $n,
+                "ammort": $a
+            }
+        });    
     }
-    function region_func() {
+    async function region_func() {
         var $v = $("#region").val();
         if($v !== "-1") {
-            $v = Number($v);
-            document.cookie = "p = " + $v;
-            document.getElementById('listeville').innerHTML = '';
-            var testDiv = document.getElementById("listeville");
-            testDiv.innerHTML = '<label class="mr-sm-2" for="inlineFormCustomSelect">Ville</label> <select name="ville" class="custom-select mr-sm-2" id="ville"><option value="" selected>Selectionner...</option>@foreach ($villes as $ville) @php @endphp @if($r=='+$v+')<option value={{$ville->id}}>{{ $ville->intitule }} </option> @endif @endforeach</select>';
-            document.getElementById('listeville').style.display ='block';
+            await fetch('/villes/'+$v, {
+                method: "GET", 
+
+            }).then(response => response.json())
+                .then(data => {
+                $("#ville").empty();
+                $("#ville").append('<option value="-1">Selectionner...</option>');
+                $.each(data, function (index, value) {
+                    $("#ville").append('<option value="' + value.id + '">' + data[index].intitule + ' </option>');
+                });
+                })
+            .catch(error => console.error(error))
+            
         }else{
-            document.getElementById('listeville').style.display ='none';
+           // document.getElementById('listeville').style.display ='none';
+           $("#ville").empty();
+           $("#ville").append('<option value="-1">Selectionner...</option>');
         }
     }
+
+    async function ville_func() {
+        var $v = $("#ville").val();
+        if($v !== "-1") {
+            await fetch('/sites/'+$v, {
+                method: "GET", 
+
+            }).then(response => response.json())
+                .then(data => {
+                $("#site").empty();
+                $("#site").append('<option value="-1">Selectionner...</option>');
+                $.each(data, function (index, value) {
+                    $("#site").append('<option value="' + value.id + '">' + data[index].intitule + ' </option>');
+
+                });
+                console.log(data);
+                })
+            .catch(error => console.error(error))
+            
+        }else{
+            // document.getElementById('listesite').style.display ='none';
+            $("#site").empty();
+            $("#site").append('<option value="-1">Selectionner...</option>');
+        }
+    }
+    
 </script>

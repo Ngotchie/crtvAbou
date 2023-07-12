@@ -15,51 +15,51 @@ class SitesSeeder extends Seeder
         DB::table('sites')->insert([
 
             [
-                'id' => '1',
-                'id_ville' => '1',
-                'id_region' => '1',
+                'id' => 1,
+                'id_ville' => 1,
+                'id_region' => 1,
                 'intitule' => 'Centre de Diffusion FM/TV'
             ],
             [
-                'id' => '2',
-                'id_ville' => '2',
-                'id_region' => '1',
+                'id' => 2,
+                'id_ville' => 2,
+                'id_region' => 1,
                 'intitule' => 'Centre de Diffusion'
             ],
             [
-                'id' => '3',
-                'id_ville' => '3',
-                'id_region' => '1',
+                'id' => 3,
+                'id_ville' => 3,
+                'id_region' => 1,
                 'intitule' => '0'
             ],
             [
-                'id' => '4',
-                'id_ville' => '3',
-                'id_region' => '1',
+                'id' => 4,
+                'id_ville' => 3,
+                'id_region' => 1,
                 'intitule' => 'A05894'
             ],
             [
-                'id' => '5',
-                'id_ville' => '3',
-                'id_region' => '1',
+                'id' => 5,
+                'id_ville' => 3,
+                'id_region' => 1,
                 'intitule' => 'Centre de Diffusion'
             ],
             [
-                'id' => '6',
-                'iid_villed' => '3',
-                'id_region' => '1',
+                'id' => 6,
+                'iid_villed' => 3,
+                'id_region' => 1,
                 'intitule' => 'Centre de diffusion Ngaoundere'
             ],
             [
-                'id' => '7',
-                'id_ville' => '3',
-                'id_region' => '1',
+                'id' => 7,
+                'id_ville' => 3,
+                'id_region' => 1,
                 'intitule' => 'Station Regional'
             ],
             [
-                'id' => '8',
-                'id_ville' => '3',
-                'id_region' => '1',
+                'id' => 8,
+                'id_ville' => 3,
+                'id_region' => 1,
                 'intitule' => 'Station Régionale'
             ],
             [
