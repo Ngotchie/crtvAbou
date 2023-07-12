@@ -14,55 +14,55 @@ class DetenteurSeeder extends Seeder
         //
         DB::table('detenteurs')->insert([
             [
-                'id' => '1',
+                'id' => 1,
                 'nom' => 'ATANGANA BOMBA T'
             ],
             [
-                'id' => '2',
+                'id' => 2,
                 'nom' => 'AWOU Marthe Leopoldine'
             ],
             [
-                'id' => '3',   
+                'id' => 3,   
                 'nom' => 'BOMBA ATANGANA'
             ],
             [
-                'id' => '4',
+                'id' => 4,
                 'nom' => 'DAN epse DJANTENG Carmen Melisa'
             ],
             [
-                'id' => '5',
+                'id' => 5,
                 'nom' => 'DONG A MOUNYOL'
             ],
             [
-                'id' => '6',
+                'id' => 6,
                 'nom' => 'ETOUNDI Joseph'
             ],
             [
-                'id' => '7',
+                'id' => 7,
                 'nom' => 'Eyebe Bodo Arsene'
             ],
             [
-                'id' => '8',
+                'id' => 8,
                 'nom' => 'GBETNKOM MOULIOM Alfred'
             ],
             [
-                'id' => '9',
+                'id' => 9,
                 'nom' => 'MBAKU FONJAH Junior'
             ],
             [
-                'id' => '10',
+                'id' => 10,
                 'nom' => 'MBASSA A A MBARA Gabriel'
             ],
             [
-                'id' => '11',
+                'id' => 11,
                 'nom' => 'MUOLOBO Hubert'
             ],
             [
-                'id' => '12',
+                'id' => 12,
                 'nom' => 'NYAM KEDI Armel Pafait'
             ],
             [
-                'id' => '13',
+                'id' => 13,
                 'nom' => 'OTH BOO Yvan Berger'
             ]
         ]);
