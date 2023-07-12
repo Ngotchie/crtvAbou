@@ -14,22 +14,28 @@
             <div class="col-auto my-1">
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Region</label>
                 <select onchange="region_func()" name="region" class="custom-select mr-sm-2" id="region">
-                    <option value="-1" selected>Selectionner...</option>
+                    <option value="-1">Selectionner...</option>
                     @foreach ($regions as $region)
-                    <option value='{{$region->id}}'>{{ $region->intitule }}</option>
+                    <option {{$region->id == intval($region_f) ? 'selected':''}} value="{{$region->id}}">{{ $region->intitule }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="col-auto my-1" id="listeville">
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Ville</label>
                 <select onchange="ville_func()" name="ville" class="custom-select mr-sm-2" id="ville">
-                    <option value="-1" selected>Selectionner...</option>
+                    <option value="-1">Selectionner...</option>
+                    @foreach ($villes as $ville)
+                    <option {{$ville->id == intval($ville_f) ? 'selected':''}} value='{{$ville->id}}'>{{ $ville->intitule }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="col-auto my-1">
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Site</label>
                 <select name="site" class="custom-select mr-sm-2" id="site">
-                    <option value="-1" selected>Selectionner...</option>
+                    <option value="-1">Selectionner...</option>
+                    @foreach ($sites as $site)
+                    <option {{$site->id == intval($site_f) ? 'selected':''}} value='{{$site->id}}'>{{ $site->intitule }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="col-auto my-1">
@@ -37,7 +43,7 @@
                 <select name="detenteur" class="custom-select mr-sm-2" id="détenteur">
                     <option value="-1" selected>Selectionner...</option>
                     @foreach ($personnes as $personne)
-                    <option value='{{$personne->id}}'>{{ $personne->nom }}</option>
+                    <option {{$personne->id == intval($detenteur_f) ? 'selected':''}} value='{{$personne->id}}'>{{ $personne->nom }}</option>
                     @endforeach
                 </select>
                 </select>
@@ -47,17 +53,17 @@
                 <select name="typeImmo" class="custom-select mr-sm-2" id="typeImmo">
                     <option value="-1" selected>Selectionner...</option>
                     @foreach ($typeImmos as $typeImmo)
-                    <option value='{{$typeImmo->id}}'>{{ $typeImmo->intitule }}</option>
+                    <option {{$typeImmo->id == intval($typeImmo_f) ? 'selected':''}} value='{{$typeImmo->id}}'>{{ $typeImmo->intitule }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="col-auto my-1">
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Ammortissement</label>
                 <select name="ammort" class="custom-select mr-sm-2" id="ammort">
-                    <option value="-1" selected>Selectionner...</option>
-                    <option value="1">Bon</option>
-                    <option value="2">OBSELETE</option>
-                    <option value="3">A REFORMER</option>
+                    <option value="-1">Selectionner...</option>
+                    <option {{$ammort_f == "BON" ? 'selected':''}}  value="Bon">Bon</option>
+                    <option {{$ammort_f == "OBSELETE" ? 'selected':''}}  value="OBSELETE">OBSELETE</option>
+                    <option {{$ammort_f == "A REFORMER" ? 'selected':''}}  value="A REFORMER">A REFORMER</option>
                 </select>
             </div>
             <div class="col-auto my-1">
@@ -65,7 +71,7 @@
                 <select name="nommen" class="custom-select mr-sm-2" id="nommen">
                     <option value="-1" selected>Selectionner...</option>
                     @foreach ($nns as $nn)
-                    <option value='{{$nn->id}}'>{{ $nn->intitule }}</option>
+                    <option {{$nn->id == intval($nommen_f) ? 'selected':''}} value='{{$nn->id}}'>{{ $nn->intitule }}</option>
                     @endforeach
                 </select>
             </div>
@@ -156,6 +162,8 @@
 @endsection
 <script>
     async function printPdf() {
+        var currentDate = new Date().toJSON().slice(0, 10);
+
         var $r = $("#region").val();
         var $v = $("#ville").val();
         var $s = $("#site").val();
@@ -163,18 +171,33 @@
         var $t = $("#typeImmo").val();
         var $n = $("#nommen").val();
         var $a = $("#ammort").val();
+
         await fetch('/printPdf', {
             method: "POST", 
-            body: {
-                "region": $r,
-                "ville": $v,
-                "site": $s,
-                "detenteur": $d,
-                "typeImmo": $t,
-                "nommen": $n,
-                "ammort": $a
-            }
-        });    
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+		    },
+            body: JSON.stringify({
+                region: $r,
+                ville: $v,
+                site: $s,
+                detenteur: $d,
+                typeImmo: $t,
+                nommen: $n,
+                ammort: $a
+            })
+        }).then(response => response.blob())
+        .then(blob => {
+            var url = window.URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = "fiche_detenteurs"+ currentDate +".pdf";
+            document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+            a.click();    
+            a.remove();  //afterwards we remove the element again         
+        }); 
     }
     async function region_func() {
         var $v = $("#region").val();
@@ -185,6 +208,8 @@
             }).then(response => response.json())
                 .then(data => {
                 $("#ville").empty();
+                $("#site").empty();
+                $("#site").append('<option value="-1">Selectionner...</option>');
                 $("#ville").append('<option value="-1">Selectionner...</option>');
                 $.each(data, function (index, value) {
                     $("#ville").append('<option value="' + value.id + '">' + data[index].intitule + ' </option>');
@@ -195,6 +220,8 @@
         }else{
            // document.getElementById('listeville').style.display ='none';
            $("#ville").empty();
+           $("#site").empty();
+           $("#site").append('<option value="-1">Selectionner...</option>');
            $("#ville").append('<option value="-1">Selectionner...</option>');
         }
     }
