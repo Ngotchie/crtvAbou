@@ -22,7 +22,9 @@ class Inventaire extends Controller
         $personnes = DB::table('detenteurs')->get();
         $nns = DB::table('nns')->get();
         return view ('inventaire')->with(['detenteurs' => $detenteurs, 'regions' =>$regions, 'typeImmos' => $typeImmos, 
-                                          'personnes' => $personnes, 'nns' => $nns]); 
+                                          'personnes' => $personnes, 'nns' => $nns, 'region_f' =>"-1", 'ville_f' =>"-1",
+                                          'site_f' =>"-1", 'region_f' =>"-1", 'detenteur_f'=>"-1", 'typeImmo_f'=>"-1",
+                                          'nommen_f'=>"-1", 'ammort_f'=>"-1", 'villes' => [], 'sites' => []]); 
     
     }
 
@@ -136,7 +138,44 @@ class Inventaire extends Controller
     */
     public function generatePDF(Request $request)
     {
-        $liste = DB::table('element_detenteurs')->orderBy('id', 'ASC')->get();
+        $region = $request->get('region');
+        $ville = $request->get('ville');
+        $site = $request->get('site');
+        $detenteur = $request->get('detenteur');
+        $typeImmo = $request->get('typeImmo');
+        $nommen = $request->get('nommen');
+        $ammort = $request->get('ammort');
+
+        $query = DB::table('element_detenteurs');
+        if($region != "-1"){
+            $lib_region = DB::table('regions')->where('id', '=', $region)->value('intitule');
+            $query->whereRaw('LOWER(region) = (?)', [strtolower($lib_region)])->where('region', '=', $lib_region);
+        }
+        if($ville != "-1"){
+            $lib_ville = DB::table('villes')->where('id', '=', $ville)->value('intitule');
+            $query->whereRaw('LOWER(ville) = (?)', [strtolower($lib_ville)])->where('ville', '=', $lib_ville);
+        }
+        if($site != "-1"){
+            $lib_site = DB::table('sites')->where('id', '=', $site)->value('intitule');
+            $query->where('site', '=', $lib_site);
+        }
+        if($detenteur != "-1"){
+            $det = DB::table('detenteurs')->where('id', '=', $detenteur)->value('nom');
+            $query->where('nom_agent_collecteur', '=', $det);
+        }
+        if($typeImmo != "-1"){
+            $lib_ti = DB::table('type_immobilisations')->where('id', '=', $typeImmo)->value('intitule');
+            $query->where('type_dimmobilisation', '=', $lib_ti);
+        }
+        if($nommen != "-1"){
+            $lib_nom = DB::table('nns')->where('id', '=', $nommen)->value('intitule');
+            $query->where('nns', '=', $lib_nom);
+        }
+        if($ammort != "-1"){
+            $query->where('valeur_amortissement', '=', $ammort);
+        }
+        $liste = DB::table('element_detenteurs')->orderBy('number', 'ASC')->get();
+        
         $file_name = date("Y.m.d")."_ListeDetenteur.pdf";
 
         $data = [
@@ -202,8 +241,13 @@ class Inventaire extends Controller
         $nns = DB::table('nns')->get();
         $regions = DB::table('regions')->get();
         $typeImmos = DB::table('type_immobilisations')->get();
+
+        $villes = DB::table('villes')->where('id_region', $region)->get();
+        $sites = DB::table('sites')->where('id_ville', $ville)->get();
         return view ('inventaire')->with(['detenteurs' => $detenteurs, 'regions' =>$regions, 'typeImmos' => $typeImmos, 
-                                          'personnes' => $personnes, 'nns' => $nns]); 
+                                          'personnes' => $personnes, 'nns' => $nns, 'region_f' => $region, 'ville_f' => $ville,
+                                          'site_f' => $site, 'detenteur_f'=> $detenteur, 'typeImmo_f'=> $typeImmo, 'nns_f' => $nommen,
+                                          'nommen_f'=> $nommen, 'ammort_f'=> $ammort, 'villes' => $villes, 'sites' => $sites]); 
         
     }
 }
