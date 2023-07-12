@@ -38,7 +38,7 @@ class Inventaire extends Controller
             $sheet        = $spreadsheet->getActiveSheet();
             $row_limit    = $sheet->getHighestDataRow();
             $column_limit = $sheet->getHighestDataColumn();
-        $row_range    = range( 3, /*$row_limit*/40 );
+        $row_range    = range( 3, /*$row_limit*/2000 );
 
             $column_range = range( 'AA', $column_limit );
             $startcount = 2;

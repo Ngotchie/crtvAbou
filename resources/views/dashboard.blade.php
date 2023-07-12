@@ -1,6 +1,6 @@
 @extends('base')
 @section('main')   
-<h1 class="mt-4">Artificial</h1>
+<h1 class="mt-4">Tech-Sol</h1>
 <ol class="breadcrumb mb-4">
     <li class="breadcrumb-item active">CRTV</li>
 </ol>

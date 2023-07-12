@@ -3,9 +3,8 @@
 @php
    $r = "0";
 @endphp
-<meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Inventaires</h1>
+    <h1 class="mt-4">Inventaires Général de Base</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item active">Détendeurs de matériels</li>
     </ol>
@@ -93,20 +92,25 @@
             <table id="datatablesSimple">
                 <thead>
                     <tr>
-                    <th>NNS</th>
+                        <th>NNS</th>
                         <th>Asset Number</th>
+                        <th>Regions</th>
+                        <th>Villes</th>
+                        <th>Sites</th>
+                        <th>Detenteur</th>
                         <th>Designation des Matières</th>
                         <th>Description</th>
-                        <th>Date Acquisition</th>
+                        <th>Date Affectation</th>
+                        <th>Lieu Affectation</th>
+                        <th>Type d'Immobilisation</th>
                         <th>Number</th>
                         <th>Qte</th>
                         <th>P.U</th>
                         <th>Valeur</th>
-                        <th>Date Affectation</th>
-                        <th>Lieu Affectation</th>
                         <th>Taux d'Ammortisement</th>
                         <th>Durée de Vie</th>
                         <th>Date d'Ammortissement</th>
+                        <th>Date Acquisition</th>
                         <th>Observations</th>
                     </tr>
                 </thead>
@@ -114,18 +118,23 @@
                     <tr>
                         <th>NNS</th>
                         <th>Asset Number</th>
+                        <th>Regions</th>
+                        <th>Villes</th>
+                        <th>Sites</th>
+                        <th>Detenteur</th>
                         <th>Designation des Matières</th>
                         <th>Description</th>
-                        <th>Date Acquisition</th>
+                        <th>Date Affectation</th>
+                        <th>Lieu Affectation</th>
+                        <th>Type d'Immobilisation</th>
                         <th>Number</th>
                         <th>Qte</th>
                         <th>P.U</th>
                         <th>Valeur</th>
-                        <th>Date Affectation</th>
-                        <th>Lieu Affectation</th>
                         <th>Taux d'Ammortisement</th>
                         <th>Durée de Vie</th>
                         <th>Date d'Ammortissement</th>
+                        <th>Date Acquisition</th>
                         <th>Observations</th>
                     </tr>
                 </tfoot>
@@ -134,18 +143,23 @@
                     <tr>
                         <td>{{ $detenteur->nns }}</td>
                         <td>{{ $detenteur->assets_number }}</td>
+                        <td>{{ $detenteur->region }}</td>
+                        <td>{{ $detenteur->ville }}</td>
+                        <td>{{ $detenteur->site }}</td>
+                        <td>{{ $detenteur->nom_agent_collecteur }}</td>
                         <td>{{ $detenteur->title }}</td>
-                        <td>{{ $detenteur->observation }}</td>
-                        <td>{{ $detenteur->date_acquisition }}</td>
+                        <td>{{ $detenteur->nom_article }}</td>
+                        <td>{{ $detenteur->date_mise_en_service }}</td>
+                        <td>{{ $detenteur->departement }}</td>
+                        <td>{{ $detenteur->type_dimmobilisation }}</td>
                         <td>{{ $detenteur->number }}</td>
                         <td>{{ $detenteur->valeur_selon_fiche }}</td>
                         <td>{{ $detenteur->quantite }}</td>
                         <td>{{ $detenteur->valeur_origine }}</td>
-                        <td>{{ $detenteur->date_mise_en_service }}</td>
-                        <td>{{ $detenteur->departement }}</td>
                         <td>{{ $detenteur->taux_amortissement }}</td>
                         <td>{{ $detenteur->duree_de_vie }}</td>
                         <td>{{ $detenteur->date_amortissement }}</td>
+                        <td>{{ $detenteur->date_acquisition }}</td>
                         <td>{{ $detenteur->observation }}</td>
                     </tr>
                     @endforeach
