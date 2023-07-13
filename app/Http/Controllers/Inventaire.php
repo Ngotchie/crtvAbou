@@ -40,7 +40,7 @@ class Inventaire extends Controller
             $sheet        = $spreadsheet->getActiveSheet();
             $row_limit    = $sheet->getHighestDataRow();
             $column_limit = $sheet->getHighestDataColumn();
-        $row_range    = range( 3, /*$row_limit*/40 );
+            $row_range    = range( 3, /*$row_limit*/500 );
 
             $column_range = range( 'AA', $column_limit );
             $startcount = 2;
@@ -146,6 +146,11 @@ class Inventaire extends Controller
         $nommen = $request->get('nommen');
         $ammort = $request->get('ammort');
 
+        $lib_region = "";
+        $lib_ville = "";
+        $lib_site = "";
+        $det = "";
+
         $query = DB::table('element_detenteurs');
         if($region != "-1"){
             $lib_region = DB::table('regions')->where('id', '=', $region)->value('intitule');
@@ -174,14 +179,18 @@ class Inventaire extends Controller
         if($ammort != "-1"){
             $query->where('valeur_amortissement', '=', $ammort);
         }
-        $liste = DB::table('element_detenteurs')->orderBy('number', 'ASC')->get();
+        $liste = $query->orderBy('number', 'ASC')->get();
         
         $file_name = date("Y.m.d")."_ListeDetenteur.pdf";
 
         $data = [
             'title' => 'FICHE DE DETENTEUR',
             'date' => date('m/d/Y'),
-            'liste' => $liste
+            'liste' => $liste,
+            'lib_region' => $lib_region,
+            'lib_ville' => $lib_ville,
+            'lib_site' => $lib_site,
+            'det' => $det,
         ];
 
 
