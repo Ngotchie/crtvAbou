@@ -211,7 +211,7 @@ class VilleSeeder extends Seeder
             [
                 'id' => 40,
                 'id_region' => 9,
-                'intitule' => 'Mvomeka \'a'
+                'intitule' => 'Mvomeka\'a'
             ],
             [
                 'id' => 41,

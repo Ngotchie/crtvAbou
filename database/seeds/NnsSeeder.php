@@ -31,7 +31,7 @@ class NnsSeeder extends Seeder
             ],
             [
                 'id' => 205,
-                'intitule' => 'Effet d"\'Habillement et d"\'Equipement'
+                'intitule' => 'Effet d\'Habillement et d\'Equipement'
             ],
             [
                 'id' => 206,
@@ -47,7 +47,7 @@ class NnsSeeder extends Seeder
             ],
             [
                 'id' => 209,
-                'intitule' => 'Meuble et Effet d"\'Ammeublement'
+                'intitule' => 'Meuble et Effet d\'Ammeublement'
             ],
             [
                 'id' => 210,
@@ -71,7 +71,7 @@ class NnsSeeder extends Seeder
             ],
             [
                 'id' => 215,
-                'intitule' => 'Ouvrages de Bibliothèque Sciences et Arts, Matériel d"\'Enseignement et Fournitures Diverses'
+                'intitule' => 'Ouvrages de Bibliothèque Sciences et Arts, Matériel d\'Enseignement et Fournitures Diverses'
             ],
             [
                 'id' => 216,
@@ -87,7 +87,7 @@ class NnsSeeder extends Seeder
             ],
             [
                 'id' => 219,
-                'intitule' => 'Caisses d"\'Emballage, Récipients Cadeaux, Obejets d"\'Echanges, et Objets non Classés Précédemmet'
+                'intitule' => 'Caisses d\'Emballage, Récipients Cadeaux, Obejets d\'Echanges, et Objets non Classés Précédemmet'
             ],
             [
                 'id' => 220,
