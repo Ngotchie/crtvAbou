@@ -55,10 +55,10 @@
         <h2 style="margin-left: 37%;"><u>FICHE DE DETENTEUR EFFECTIF</u></h2>
         <ol style="margin-left: 35%;">
             <li>DEPARTMENT DE LA COMPTABILITE MATIERE: 2023</li>
-            <li>REGION: </li>
-            <li>VILLE: </li>
-            <li>SITE:</li>
-            <li>DETENTEUR:</li>
+            <li>REGION: {{$lib_region}}</li>
+            <li>VILLE: {{$lib_ville}}</li>
+            <li>SITE: {{$lib_site}}</li>
+            <li>DETENTEUR: {{$det}}</li>
         </ol>
         </header>
 
