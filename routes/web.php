@@ -29,6 +29,8 @@ $this->post('/filtre', 'Inventaire@filtreData');
 $this->get('/villes/{id}', 'FiltreController@getVilles');
 $this->get('/sites/{id}', 'FiltreController@getSites');
 
+$this->get('/compte_gestion/{annee}', 'CompteGestionController@compte_gestion');
+
 $this->get('/testpdf', function() {
   $liste = DB::table('element_detenteurs')->orderBy('number', 'ASC')->get();
   return view('pdf')->with('liste', $liste);
