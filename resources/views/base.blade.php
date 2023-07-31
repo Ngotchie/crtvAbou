@@ -62,12 +62,16 @@
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="/inventaire">Liste des détentions</a>
+                                    <a class="nav-link" href="/public/inventaire">Liste des détentions</a>
                                     <a class="nav-link" href="#">Ajouter une détention</a>
                                     <a class="nav-link" href="#">Nouveau détenteur</a>
                                     <a class="nav-link" href="#"><button style="height:40px; width:250px; color:white; background-color: black;" type="button" data-toggle="modal" data-target="#demoModal">Importer un fichier</button></a>
                                 </nav>
                             </div>
+                            <a class="nav-link" href="#"onclick="compGesDialog();">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                Compte de gestion
+                            </a>
                            
                         </div>
                     </div>
@@ -122,6 +126,32 @@
 				</div>
 			</div>
 
+            <div class="modal fade" id="compteGestionModal" tabindex="-2" role="dialog" aria-labelledby="compteGestionLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="compteGestionLabel">Compte de gestion</h5>
+								<button type="button" onclick="closeCompGes()" class="close" data-dismiss="modal" aria- 
+                                label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+						</div>
+                        <div class="modal-body">
+                        <div class="col-auto my-1">
+                            <label class="mr-sm-2" for="inlineFormCustomSelect">Selectionner une année</label>
+                            <select name="annee" class="custom-select mr-sm-2" id="annee">
+                            </select>
+                            </select>
+                        </div>
+                        </div>
+                        <input type="hidden" id="_token_c" value="{{ csrf_token() }}">
+                        <div class="modal-footer">
+                            <button id="valideCompGes" onclick="ValideCompteGestionDialog()" type="button submit" class="btn btn-primary">Générer</button>
+                        </div>
+					</div>
+				</div>
+			</div>
+
         </div>
         <style>
             .loader {
@@ -162,6 +192,37 @@
                 } else {
                     x.style.display = "none";
                 }
+            }
+
+            function compGesDialog() {         
+                $("#compteGestionModal").modal('show');
+                getCurrentYear = new Date().getFullYear(); // current year
+                listOfYears = Array.from({length: 10}, (_, i) => this.getCurrentYear - i);
+                $.each(listOfYears, function (index, value) {
+                    $("#annee").append('<option value="' + value + '">' + value + ' </option>');
+
+                });
+            }
+
+            async function ValideCompteGestionDialog() {
+                var $a = $("#annee").val();
+                await fetch('/compte_gestion/'+ $a)
+                .then(response => response.blob())
+                .then(blob => {
+                    var url = window.URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = url;
+                    a.download =  "Compte_Gestion"+ $a +".pdf";
+                    window.open(url, '_blank');
+                    URL.revokeObjectURL(blobUrl);
+                    document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+                    a.click();    
+                    a.remove();  //afterwards we remove the element again         
+                }).catch(error => console.error(error)); 
+            }
+
+            function closeCompGes() {
+                $("#compteGestionModal").modal('hide');
             }
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

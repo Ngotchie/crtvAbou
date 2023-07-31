@@ -31,6 +31,8 @@ $this->post('/filtre', 'Inventaire@filtreData');
 $this->get('/villes/{id}', 'FiltreController@getVilles');
 $this->get('/sites/{id}', 'FiltreController@getSites');
 
+$this->get('/compte_gestion/{annee}', 'CompteGestionController@compte_gestion');
+
 $this->get('/testpdf', function() {
   ini_set('max_execution_time', 0);
   ini_set('memory_limit', '4000M');    
