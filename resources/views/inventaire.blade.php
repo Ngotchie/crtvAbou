@@ -40,7 +40,7 @@
             </div>
             <div class="col-auto my-1">
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Détenteur</label>
-                <select name="detenteur" class="custom-select mr-sm-2" id="détenteur">
+                <select name="detenteur" class="custom-select mr-sm-2" id="detenteur">
                     <option value="-1" selected>Selectionner...</option>
                     @foreach ($personnes as $personne)
                     <option {{$personne->id == intval($detenteur_f) ? 'selected':''}} value='{{$personne->id}}'>{{ $personne->nom }}</option>
@@ -90,10 +90,11 @@
         </div>
         <div class="card-body">        
             <div class="d-flex" style="margin-bottom: 5px;">    
-                    <!-- <a href="{{url('printPdf')}}" class="btn btn-secondary btn-sm" style="margin-left:40%">Export PDF</a> -->
+                     <!--<a href="{{url('printPdf')}}" class="btn btn-secondary btn-sm" style="margin-left:40%">Export PDF</a> -->
                     <a href="javascript:printPdf()" class="btn btn-secondary btn-sm" style="margin-left:40%">Export PDF</a>
                     
-                    <a href="{{url('exportExcel')}}" class="btn btn-primary btn-sm" style="margin-left:5px">Export Excel</a>
+                    <!--<a href="{{url('exportExcel')}}" class="btn btn-primary btn-sm" style="margin-left:5px">Export Excel</a>-->
+                    <a href="javascript:exportExcel()" class="btn btn-primary btn-sm" style="margin-left:5px">Export Excel</a>
             </div>
             <table id="datatablesSimple">
                 <thead>
@@ -187,8 +188,16 @@
         var $n = $("#nommen").val();
         var $a = $("#ammort").val();
 
-        await fetch('/printPdf', {
+        var $r_l = $r != "-1" ? $( "#region option:selected" ).text() : "DIRECTION GENERLE DE LA CRTV - DEPARTMENT DE LA COMPTABILITE MATIERE";
+        var $v_l = $v != "-1" ? '_'+ $( "#ville option:selected" ).text() : "";
+        var $s_l = $s != "-1" ? '_'+ $( "#site option:selected" ).text() : "";
+        var $d_l = $d != "-1" ? '_'+ $( "#detenteur option:selected" ).text() : "";
+        
+        var $l = $r_l + $v_l + $s_l + "_FD"+$d_l;
+        
+        await fetch('/public/printPdf', {
             method: "POST", 
+            cache: "no-cache",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -201,23 +210,72 @@
                 detenteur: $d,
                 typeImmo: $t,
                 nommen: $n,
-                ammort: $a
+                ammort: $a,
             })
         }).then(response => response.blob())
-        .then(blob => {
-            var url = window.URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = "fiche_detenteurs"+ currentDate +".pdf";
-            document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
-            a.click();    
-            a.remove();  //afterwards we remove the element again         
-        }); 
+            .then(blob => {
+                var url = window.URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = $l +".pdf";
+                document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+                a.click();    
+                a.remove();  //afterwards we remove the element again         
+            }).catch(error => console.error(error)); 
+    }
+    
+      async function exportExcel() {
+        var currentDate = new Date().toJSON().slice(0, 10);
+
+        var $r = $("#region").val();
+        var $v = $("#ville").val();
+        var $s = $("#site").val();
+        var $d = $("#detenteur").val();
+        var $t = $("#typeImmo").val();
+        var $n = $("#nommen").val();
+        var $a = $("#ammort").val();
+       
+        var $r_l = $r != "-1" ? $( "#region option:selected" ).text() : "DIRECTION GENERLE DE LA CRTV - DEPARTMENT DE LA COMPTABILITE MATIERE";
+        var $v_l = $v != "-1" ? '_'+ $( "#ville option:selected" ).text() : "";
+        var $s_l = $s != "-1" ? '_'+ $( "#site option:selected" ).text() : "";
+        var $d_l = $d != "-1" ? '_'+ $( "#detenteur option:selected" ).text() : "";
+        
+        var $l = $r_l + $v_l + $s_l + "_FD"+$d_l;
+        
+        await fetch('/public/exportExcel', {
+            method: "POST", 
+            cache: "no-cache",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+		    },
+            body: JSON.stringify({
+                region: $r,
+                ville: $v,
+                site: $s,
+                detenteur: $d,
+                typeImmo: $t,
+                nommen: $n,
+                ammort: $a,
+            })
+        }).then(response => response.blob())
+            .then(blob => {
+                var url = window.URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                console.log("----"+a);
+                a.href = url;
+                // a.download = $n+ currentDate +".xls";
+                a.download = $l +".xls";
+                document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+                a.click();    
+                a.remove();  //afterwards we remove the element again         
+            }).catch(error => console.error(error)); 
     }
     async function region_func() {
         var $v = $("#region").val();
         if($v !== "-1") {
-            await fetch('/villes/'+$v, {
+            await fetch('/public/villes/'+$v, {
                 method: "GET", 
 
             }).then(response => response.json())
@@ -244,7 +302,7 @@
     async function ville_func() {
         var $v = $("#ville").val();
         if($v !== "-1") {
-            await fetch('/sites/'+$v, {
+            await fetch('/public/sites/'+$v, {
                 method: "GET", 
 
             }).then(response => response.json())
