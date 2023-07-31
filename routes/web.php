@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\DB;
+//use PDF;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,15 +24,39 @@ $this->post('/authenticate', 'Auth\LoginController@authenticate');
 
 $this->get('/inventaire', 'Inventaire@index');
 $this->post('/importfile', 'Inventaire@importData');
-$this->get('/exportExcel', 'Inventaire@exportData');
+$this->post('/exportExcel', 'Inventaire@exportData');
 $this->post('/printPdf', 'Inventaire@generatePDF');
+$this->post('/printInventaire', 'Inventaire@generateInventaire');
 $this->post('/filtre', 'Inventaire@filtreData');
 $this->get('/villes/{id}', 'FiltreController@getVilles');
 $this->get('/sites/{id}', 'FiltreController@getSites');
 
 $this->get('/testpdf', function() {
-  $liste = DB::table('element_detenteurs')->orderBy('number', 'ASC')->get();
-  return view('pdf')->with('liste', $liste);
+  ini_set('max_execution_time', 0);
+  ini_set('memory_limit', '4000M');    
+  $liste = DB::table('element_detenteurs')->where('region', '=', "Adamaoua")->orderBy('number', 'ASC')->get();
+  
+   $file_name = date("Y.m.d")."_ListeDetenteur.pdf";
+
+        $data = [
+            'title' => 'FICHE DE DETENTEUR',
+            'date' => date('m/d/Y'),
+            'liste' => $liste,
+            'lib_region' => "",
+            'lib_ville' => "",
+            'lib_site' => "",
+            'det' => "",
+        ];
+
+
+        PDF::setOptions([
+            "defaultFont" => "Courier",
+            "defaultPaperSize" => "a3",
+            "dpi" => 130
+        ]);
+
+        $pdf = PDF::loadView('pdf', $data)->setPaper('a4', 'landscape');;
+        return $pdf->download($file_name);
 });
 
 $this->get('/dashboard', function() {

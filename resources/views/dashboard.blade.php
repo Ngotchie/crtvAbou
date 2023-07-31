@@ -25,7 +25,7 @@
     </div>
     <div class="col-xl-3 col-md-6">
         <div class="card bg-success text-white mb-4">
-            <div class="card-body">Etat Recapitulatif</div>
+            <div class="card-body">Etat Recapitulatif Et Apréciatif </div>
             <div class="card-footer d-flex align-items-center justify-content-between">
                 <a class="small text-white stretched-link" href="#">View Details</a>
                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
@@ -47,7 +47,7 @@
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-chart-area me-1"></i>
-                Courbe de répartion du matériel par région
+                Courbe de Répartion du Matériel Par Service
             </div>
             <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
         </div>
@@ -56,7 +56,7 @@
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-chart-bar me-1"></i>
-                Graphe des coùt du matériel par région
+                Graphe des Coùt du Matériel
             </div>
             <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
         </div>

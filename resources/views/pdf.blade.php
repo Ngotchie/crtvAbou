@@ -66,37 +66,38 @@
          <table>
             <thead>
                 <tr>
-                    <th>Number</th>
-                    <th>NNS</th>
                     <th>Asset Number</th>
-                    <th>Titre</th>
-                    <th>Description</th>
-                    <th>Date Acquisition</th>
+                    <th>NNS</th>
+                    <th>DESIGNATION DES MATIERES ET OBJETS</th>
+                    <th>DESCRIPTION, CARACTERISTIQUES DES MATIERES ET OBJETS</t>
+                    <th>TYPE <br>D'IMMOBI<br>LISATTION</th>
+                    <th>DATE D'ACQUI<br>SITION</th>
                     <th>QTE</th>
-                    <th>P U</th>
-                    <th>Valeur</th>
-                    <th>Date Affectation</th>
-                    <th>Lieu Affectation</th>
-                    <th>Visa Detenteur</th>
-                    <th>Observations</th>
+                    <th>P.U  <br></th>
+                    <th>VALEUR</th>
+                    <th>DATE D'AFFEC<br>TATION</th>
+                    <th>LIEU D'AFFEC<br>TATION</th>
+                    <!--th>VISA<br>DETEN<br>TEUR</th-->
+                    <th>OBSERVA<br>TIONS</th>
+                    
                 </tr>
             </thead>
             <tbody>
                     @foreach ($liste as $detenteur)
                     <tr>
-                        <td>{{ $detenteur->number }}</td>
-                        <td>{{ $detenteur->nns }}</td>
                         <td>{{ $detenteur->assets_number }}</td>
+                        <td>{{ $detenteur->nns }}</td>
                         <td>{{ $detenteur->title }}</td>
-                        <td>{{ $detenteur->observation }}</td>
+                        <td>{{ $detenteur->nom_article }}</td>
+                        <td>{{ $detenteur->type_dimmobilisation }}</td>
                         <td>{{ $detenteur->date_acquisition }}</td>
                         <td>{{ $detenteur->quantite }}</td>
                         <td>{{ $detenteur->valeur_origine }}</td>
                         <td>{{ $detenteur->valeur }}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{{ $detenteur->date_mise_en_service }}</td>
+                        <td>{{ $detenteur->departement }}</td>
+                        <!--td>{{ $detenteur->visa_detenteur }}</td--> 
+                        <td>{{ $detenteur->statut_de_larticle }}</td> 
                     </tr>
                     @endforeach
             </tbody>
