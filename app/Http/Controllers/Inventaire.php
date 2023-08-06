@@ -319,8 +319,8 @@ class Inventaire extends Controller
         $t = 0;
         //$dat = DB::table('element_detenteurs')->where('nns', '=', $elt->id)->where('date_mise_en_service', '=', $annee)->get();
         foreach($liste as $d) {
-            if($d->valeur_a_dire_experts != null){
-                $t = $t + (int)$d->valeur_a_dire_experts * (int)$d->quantite;
+            if($d->valeur_origine != null){
+                $t = $t + (int)$d->valeur_origine * (int)$d->quantite;
             }
         } 
         //echo $liste;
@@ -337,6 +337,7 @@ class Inventaire extends Controller
             'lib_site' => $lib_site,
             'det' => $det,
             'montant' => $this->numberToWord($montant),
+            't' => $t,
         ];
 
 

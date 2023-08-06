@@ -95,33 +95,45 @@
                         <td>{{ $detenteur->type_dimmobilisation }}</td>
                                         <!--td>{{ $detenteur->date_acquisition }}</td-->
                         <td>{{ $detenteur->quantite }}</td>
-                        <td>{{ $detenteur->valeur_a_dire_experts }}</td>
-                        <td>{{ $detenteur->valeur }}</td>
-                        <td>{{ $detenteur-> valeur_a_dire_experts}}</td>
-                        <td>{{ $detenteur-> valeur}}</td>
+                        <td>{{ number_format($detenteur->valeur_origine, 0, ',', ' ') }}</td>
+                        <td>{{ number_format($detenteur->valeur, 0, ',', ' ') }}</td>
+                        <td>{{ number_format($detenteur-> valeur_a_dire_experts, 0, ',', ' ')}}</td>
+                        <td>{{ number_format($detenteur-> valeur, 0, ',', ' ')}}</td>
                         <td>{{ $detenteur->date_mise_en_service }}</td>
                                         <!--td>{{ $detenteur->departement }}</td-->
                                         <!--td>{{ $detenteur->visa_detenteur }}</td--> 
                                         <!--td>{{ $detenteur->statut_de_larticle }}</td--> 
                     </tr>
                     @endforeach
+                    <tr>
+                        <td colspan="7"> </td>
+                        <td colspan="3"> <strong>TOTAL  {{ number_format($t, 0, ',', ' ') }} FCFA</strong></td>
+                    </tr>
             </tbody>
          </table>
         </main> 
           <!-- The footer contains the company's website and address. To align the address details we will use flexbox in the CSS style. -->
         <footer style="margin-top: 50px;">
-            <h3 style="margin-top: 20px">Arrêté le présent inventaire à la somme de {{$montant}} FCFA</h3>
-            <br>
-            <br>
-            <br>
-            <br>
-            <h5 style="float:right; margin-top: -50px">A Yaoundé, le {{$date}}</h5>
-            <br>
-            <h5 style="float:right; margin-top: -50px">Vu : <br>l'Approvisionnement du magasin ou materiel en service </h5>
-            <br>
-            <h4 style="margin-top: 20px">LE COMPTABLE GESTIONNAIRE <br>OU DEPOSITAIRE COMPTABLE</h4>
-            <h4 style="margin-left: 40%; margin-top: -40px">CHARGE DE LA <br>SURVEILLANCE <br>ADMINISTRATIVE</h4>
-            <h4 style="float:right; margin-top: -50px">Vu : <br><br><br><br>LE DIRECTEUR GENERAL</h4>
+            <div>
+                <h3 style="margin-top: 20px">Arrêté le présent inventaire à la somme de {{$montant}} FCFA</h3>
+                <br>
+            </div>
+            <div>
+                <h5 style="float:right; margin-top: 20px">A Yaoundé, le {{$date}}</h5>
+                <br>
+            </div>
+            <div>
+                <h5 style="float:right; margin-top: -1px">Vu : <br>l'Approvisionnement du magasin ou materiel en service </h5>
+            </div>
+            <!--div>
+                <h4 style="float:right; margin-top: 40px">Vu: </h5>
+                <br>
+            </div-->
+            <div>
+            <h4 style="margin-top: 250px">LE COMPTABLE GESTIONNAIRE <br>OU DEPOSITAIRE COMPTABLE</h4>
+            <h4 style="margin-left: 40%; margin-top: -150px">CHARGE DE LA SURVEILLANCE <br>ADMINISTRATIVE</h4>
+            <h4 style="float:right; margin-top: -150px">LE DIRECTEUR GENERAL</h4>
+            </div>
         </footer>
     </body>
 </html>

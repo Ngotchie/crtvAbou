@@ -115,8 +115,8 @@
                         <th>Type d'Immobilisation</th>
                         <th>Number</th>
                         <th>Qte</th>
-                        <th>P.U</th>
-                        <th>Valeur</th>
+                        <th>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspP.U&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</th>
+                        <th>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspValeur&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</th>
                         <th>Taux d'Ammortisement</th>
                         <th>Durée de Vie</th>
                         <th>Date d'Ammortissement</th>
@@ -139,8 +139,8 @@
                         <th>Type d'Immobilisation</th>
                         <th>Number</th>
                         <th>Qte</th>
-                        <th>P.U</th>
-                        <th>Valeur</th>
+                        <th>&nbsp&nbsp&nbsp&nbsp&nbsp&nbspP.U&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</th>
+                        <th>&nbsp&nbsp&nbsp&nbsp&nbsp&nbspValeur&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</th>
                         <th>Taux d'Ammortisement</th>
                         <th>Durée de Vie</th>
                         <th>Date d'Ammortissement</th>
@@ -164,8 +164,8 @@
                         <td>{{ $detenteur->type_dimmobilisation }}</td>
                         <td>{{ $detenteur->number }}</td>
                         <td>{{ $detenteur->quantite }}</td>
-                        <td>{{ $detenteur->valeur_a_dire_experts }}</td>
-                        <td>{{ $detenteur->valeur_origine }}</td>
+                        <td>{{ number_format($detenteur->valeur_origine, 0, ',', ' ') }}</td>
+                        <td>{{ number_format($detenteur->valeur_a_dire_experts, 0, ',', ' ') }}</td>
                         <td>{{ $detenteur->taux_amortissement }}</td>
                         <td>{{ $detenteur->duree_de_vie }}</td>
                         <td>{{ $detenteur->date_amortissement }}</td>
