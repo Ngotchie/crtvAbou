@@ -197,7 +197,7 @@
             function compGesDialog() {         
                 $("#compteGestionModal").modal('show');
                 getCurrentYear = new Date().getFullYear(); // current year
-                listOfYears = Array.from({length: 10}, (_, i) => this.getCurrentYear - i);
+                listOfYears = Array.from({length: 20}, (_, i) => this.getCurrentYear - i);
                 $.each(listOfYears, function (index, value) {
                     $("#annee").append('<option value="' + value + '">' + value + ' </option>');
 

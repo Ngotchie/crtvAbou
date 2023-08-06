@@ -28,6 +28,40 @@ class Inventaire extends Controller
     
     }
 
+    public function getOne($id) {
+        $detenteur = DB::table('element_detenteurs')->where('id', $id)->get();
+        return $detenteur;
+    }
+
+    public function updateOne($id, Request $request) {
+        $detenteur = DB::table('element_detenteurs')
+                     ->where("id", $id)
+                     ->update([
+                         "nns" => $request->get('nns'),
+                         "assets_number" => $request->get('assets_number'),
+                         "region" => $request->get('region'),
+                         "ville" => $request->get('ville'),
+                         "site" => $request->get('site'),
+                         "nom_agent_collecteur" => $request->get('nom_agent_collecteur'),
+                         "title" => $request->get('title'),
+                         "nom_article" => $request->get('nom_article'),
+                         "date_mise_en_service" => $request->get('date_mise_en_service'),
+                         "departement" => $request->get('departement'),
+                         "type_dimmobilisation" => $request->get('type_dimmobilisation'),
+                         "number" => $request->get('number'),
+                         "valeur_a_dire_experts" => $request->get('valeur_a_dire_experts'),
+                         "quantite" => $request->get('quantite'),
+                         "valeur_origine" => $request->get('valeur_origine'),
+                         "taux_amortissement" => $request->get('taux_amortissement'),
+                         "duree_de_vie" => $request->get('duree_de_vie'),
+                         "date_amortissement" => $request->get('date_amortissement'),
+                         "date_acquisition" => $request->get('date_acquisition'),
+                         "observation" => $request->get('observation'),
+                        ]);
+
+        return $detenteur;
+    }
+
     public function importData(Request $request){
         // $this->validate($request, [
         //     'fileupload' => 'required|file|mimes:xls,xlsx'

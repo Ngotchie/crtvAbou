@@ -29,6 +29,9 @@ $this->post('/filtre', 'Inventaire@filtreData');
 $this->get('/villes/{id}', 'FiltreController@getVilles');
 $this->get('/sites/{id}', 'FiltreController@getSites');
 
+$this->get('/inventaire/{id}', 'Inventaire@getOne');
+$this->put('/inventaire/{id}', 'Inventaire@updateOne');
+
 $this->get('/compte_gestion/{annee}', 'CompteGestionController@compte_gestion');
 
 $this->get('/testpdf', function() {
