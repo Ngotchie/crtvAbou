@@ -53,8 +53,8 @@
         <div style="margin-top: -150px;"><hr /></div>
         
         <h2 style="margin-left: 37%;"><u>INVENTAIRE</u></h2>
-        <h3 style="margin-left: 37%;"><u>DES MATIERES, DENREES OU OBJETS </u></h3>
-        <ol style="margin-left: 35%;">
+        <h3 style="margin-left: 27%;"><u>DES MATIERES, DENREES OU OBJETS </u></h3>
+        <ol style="margin-left: 30%;">
             <li>DEPARTMENT DE LA COMPTABILITE MATIERE: 2023</li>
             <li>REGION: {{$lib_region}}</li>
             <li>VILLE: {{$lib_ville}}</li>
@@ -70,17 +70,17 @@
                     <th>Asset Number</th>
                     <th>NNS</th>
                     <th>DESIGNATION DES MATIERES ET OBJETS</th>
-                    <th>DESCRIPTION, CARACTERISTIQUES DES MATIERES ET OBJETS</t>
+                                <!--th>DESCRIPTION, CARACTERISTIQUES DES MATIERES ET OBJETS</t-->
                     <th>TYPE <br>D'IMMOBI<br>LISATTION</th>
-                    <!--th>DATE D'ACQUI<br>SITION</th-->
+                                <!--th>DATE D'ACQUI<br>SITION</th-->
                     <th>QTE</th>
                     <th>P.U  <br></th>
                     <th>VALEUR PARTIELLES</th>
                     <th>VALEUR NET<br>(VU L'AMMORTISSEMENT)</th>
                     <th>VALEUR NET<br>(VU LE NNS)</th>
-                    <!--th>DATE D'AFFEC<br>TATION</th>
-                    <th>LIEU D'AFFEC<br>TATION</th-->
-                    <!--th>VISA<br>DETEN<br>TEUR</th-->
+                                <!--th>DATE D'AFFEC<br>TATION</th>
+                                <th>LIEU D'AFFEC<br>TATION</th-->
+                                <!--th>VISA<br>DETEN<br>TEUR</th-->
                     <th>DATE <br>DU DERNIER <br>RECENSEMENT</th>
                     
                 </tr>
@@ -91,18 +91,18 @@
                         <td>{{ $detenteur->assets_number }}</td>
                         <td>{{ $detenteur->nns }}</td>
                         <td>{{ $detenteur->title }}</td>
-                        <td>{{ $detenteur->nom_article }}</td>
+                                        <!--td>{{ $detenteur->nom_article }}</td-->
                         <td>{{ $detenteur->type_dimmobilisation }}</td>
-                        <!--td>{{ $detenteur->date_acquisition }}</td-->
+                                        <!--td>{{ $detenteur->date_acquisition }}</td-->
                         <td>{{ $detenteur->quantite }}</td>
-                        <td>{{ $detenteur->valeur_origine }}</td>
+                        <td>{{ $detenteur->valeur_a_dire_experts }}</td>
                         <td>{{ $detenteur->valeur }}</td>
-                        <td>{{ $detenteur-> valeur}}</td>
+                        <td>{{ $detenteur-> valeur_a_dire_experts}}</td>
                         <td>{{ $detenteur-> valeur}}</td>
                         <td>{{ $detenteur->date_mise_en_service }}</td>
-                        <!--td>{{ $detenteur->departement }}</td-->
-                        <!--td>{{ $detenteur->visa_detenteur }}</td--> 
-                        <!--td>{{ $detenteur->statut_de_larticle }}</td--> 
+                                        <!--td>{{ $detenteur->departement }}</td-->
+                                        <!--td>{{ $detenteur->visa_detenteur }}</td--> 
+                                        <!--td>{{ $detenteur->statut_de_larticle }}</td--> 
                     </tr>
                     @endforeach
             </tbody>
@@ -111,6 +111,8 @@
           <!-- The footer contains the company's website and address. To align the address details we will use flexbox in the CSS style. -->
         <footer style="margin-top: 50px;">
             <h3 style="margin-top: 20px">Arrêté le présent inventaire à la somme de {{$montant}} FCFA</h3>
+            <br>
+            <br>
             <br>
             <br>
             <h5 style="float:right; margin-top: -50px">A Yaoundé, le {{$date}}</h5>

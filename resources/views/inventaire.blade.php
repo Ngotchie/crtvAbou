@@ -95,12 +95,9 @@
                     
                     <!--<a href="{{url('exportExcel')}}" class="btn btn-primary btn-sm" style="margin-left:5px">Export Excel</a>-->
                     <a href="javascript:exportExcel()" class="btn btn-primary btn-sm" style="margin-left:5px">Export Excel</a>
-<<<<<<< HEAD
 
                     <!--<a href="{{url('exportExcel')}}" class="btn btn-third btn-sm" style="margin-left:5px">Export Excel</a>-->
                     <a href="javascript:printInventaire()" class="btn btn-third btn-sm" style="margin-left:5px">Export Inventaire</a>
-=======
->>>>>>> cb9a7ff9e39237a3e8765400c19c0166428cdeb2
             </div>
             <table id="datatablesSimple">
                 <thead>
@@ -166,8 +163,8 @@
                         <td>{{ $detenteur->departement }}</td>
                         <td>{{ $detenteur->type_dimmobilisation }}</td>
                         <td>{{ $detenteur->number }}</td>
-                        <td>{{ $detenteur->valeur_selon_fiche }}</td>
                         <td>{{ $detenteur->quantite }}</td>
+                        <td>{{ $detenteur->valeur_a_dire_experts }}</td>
                         <td>{{ $detenteur->valeur_origine }}</td>
                         <td>{{ $detenteur->taux_amortissement }}</td>
                         <td>{{ $detenteur->duree_de_vie }}</td>
@@ -201,11 +198,7 @@
         
         var $l = $r_l + $v_l + $s_l + "_FD"+$d_l;
         
-<<<<<<< HEAD
-        await fetch('/printPdf', {
-=======
         await fetch('/public/printPdf', {
->>>>>>> cb9a7ff9e39237a3e8765400c19c0166428cdeb2
             method: "POST", 
             cache: "no-cache",
             headers: {
@@ -233,14 +226,9 @@
                 a.remove();  //afterwards we remove the element again         
             }).catch(error => console.error(error)); 
     }
-<<<<<<< HEAD
 
 
     async function printInventaire() {
-=======
-    
-      async function exportExcel() {
->>>>>>> cb9a7ff9e39237a3e8765400c19c0166428cdeb2
         var currentDate = new Date().toJSON().slice(0, 10);
 
         var $r = $("#region").val();
@@ -250,25 +238,14 @@
         var $t = $("#typeImmo").val();
         var $n = $("#nommen").val();
         var $a = $("#ammort").val();
-<<<<<<< HEAD
-
-=======
-       
->>>>>>> cb9a7ff9e39237a3e8765400c19c0166428cdeb2
         var $r_l = $r != "-1" ? $( "#region option:selected" ).text() : "DIRECTION GENERLE DE LA CRTV - DEPARTMENT DE LA COMPTABILITE MATIERE";
         var $v_l = $v != "-1" ? '_'+ $( "#ville option:selected" ).text() : "";
         var $s_l = $s != "-1" ? '_'+ $( "#site option:selected" ).text() : "";
         var $d_l = $d != "-1" ? '_'+ $( "#detenteur option:selected" ).text() : "";
         
-<<<<<<< HEAD
         var $l = $r_l + $v_l + $s_l + "_IV"+$d_l;
         
         await fetch('/printInventaire', {
-=======
-        var $l = $r_l + $v_l + $s_l + "_FD"+$d_l;
-        
-        await fetch('/public/exportExcel', {
->>>>>>> cb9a7ff9e39237a3e8765400c19c0166428cdeb2
             method: "POST", 
             cache: "no-cache",
             headers: {
@@ -289,20 +266,12 @@
             .then(blob => {
                 var url = window.URL.createObjectURL(blob);
                 var a = document.createElement('a');
-<<<<<<< HEAD
                 a.href = url;
                 a.download = $l +".pdf";
-=======
-                console.log("----"+a);
-                a.href = url;
-                // a.download = $n+ currentDate +".xls";
-                a.download = $l +".xls";
->>>>>>> cb9a7ff9e39237a3e8765400c19c0166428cdeb2
                 document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
                 a.click();    
                 a.remove();  //afterwards we remove the element again         
             }).catch(error => console.error(error)); 
-<<<<<<< HEAD
     }
     
     async function exportExcel() {
@@ -352,8 +321,6 @@
             a.click();    
             a.remove();  //afterwards we remove the element again         
         }).catch(error => console.error(error)); 
-=======
->>>>>>> cb9a7ff9e39237a3e8765400c19c0166428cdeb2
     }
 
 

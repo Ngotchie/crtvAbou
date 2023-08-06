@@ -58,14 +58,14 @@ class CompteGestionController extends Controller
              
             $num    = str_replace( array( ',' , ' ' ) , '' , trim( $num ) );
              
-            $list1  = array('','one','two','three','four','five','six','seven',
-                'eight','nine','ten','eleven','twelve','thirteen','fourteen',
-                'fifteen','sixteen','seventeen','eighteen','nineteen');
+            $list1  = array('','un','deux','trois','quatre','cinq','six','sept',
+                'huit','neuf','dix','onze','douze','treize','quatorze',
+                'quinze','seize','dix-sept','dix-huit','dix-neuf');
              
-            $list2  = array('','ten','twenty','thirty','forty','fifty','sixty',
-                'seventy','eighty','ninety','hundred');
+            $list2  = array('','dix','vingt','trente','quarente','cinquante','soixante',
+                'soixante-dix','quatre-vingt','quatre-vingt-dix','cent');
              
-            $list3  = array('','thousand','million','billion','trillion',
+            $list3  = array('','mille(s)','million(s)','milliard(s)','trillion',
                 'quadrillion','quintillion','sextillion','septillion',
                 'octillion','nonillion','decillion','undecillion',
                 'duodecillion','tredecillion','quattuordecillion',
@@ -82,7 +82,7 @@ class CompteGestionController extends Controller
             {
                 $levels--;
                 $hundreds   = ( int ) ( $num_part / 100 );
-                $hundreds   = ( $hundreds ? ' ' . $list1[$hundreds] . ' Hundred' . ( $hundreds == 1 ? '' : 's' ) . ' ' : '' );
+                $hundreds   = ( $hundreds ? ' ' . $list1[$hundreds] . ' Cent' . ( $hundreds == 1 ? '' : 's' ) . ' ' : '' );
                 $tens       = ( int ) ( $num_part % 100 );
                 $singles    = '';
                  
@@ -96,7 +96,7 @@ class CompteGestionController extends Controller
             $words  = trim( str_replace( ' ,' , ',' , ucwords( $words ) )  , ', ' );
             if( $commas )
             {
-                $words  = str_replace( ',' , ' and' , $words );
+                $words  = str_replace( ',' , ' ' , $words );
             }
              
             return $words;

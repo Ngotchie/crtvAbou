@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-include('ChiffresEnLettres.php');
+include('CompteGestionController.php');
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -42,12 +42,8 @@ class Inventaire extends Controller
             $sheet        = $spreadsheet->getActiveSheet();
             $row_limit    = $sheet->getHighestDataRow();
             $column_limit = $sheet->getHighestDataColumn();
-<<<<<<< HEAD
-            $row_range    = range( 3, /*$row_limit*/500 );
-=======
-            $row_range    = range( 14001, /*$row_limit*/15344 );
->>>>>>> cb9a7ff9e39237a3e8765400c19c0166428cdeb2
 
+            $row_range    = range( 14001, /*$row_limit*/15344 );
             $column_range = range( 'AA', $column_limit );
             $startcount = 2;
             $data = array();
@@ -189,7 +185,7 @@ class Inventaire extends Controller
     public function generatePDF(Request $request)
     {
         ini_set('max_execution_time', 0);
-        ini_set('memory_limit', '4000M');
+        ini_set('memory_limit', '61440');
         $region = $request->get('region');
         $ville = $request->get('ville');
         $site = $request->get('site');
@@ -254,12 +250,14 @@ class Inventaire extends Controller
         $pdf = PDF::loadView('pdf', $data)->setPaper('a4', 'landscape');;
         return $pdf->download($file_name);
         // return response($$file_name)->header('Content-Type', 'application/javascript');
+
+        
     }
 
     public function generateInventaire(Request $request)
     {
         ini_set('max_execution_time', 0);
-        ini_set('memory_limit', '4000M');
+        ini_set('memory_limit', '61440M');
         $region = $request->get('region');
         $ville = $request->get('ville');
         $site = $request->get('site');
@@ -307,7 +305,7 @@ class Inventaire extends Controller
             ;//$montant = (strint)((int)$montant + (int)$v22);
         }*/
         $nb= 0;
-        foreach ($liste as $cle_1 => $valeur_1) {
+        /*foreach ($liste as $cle_1 => $valeur_1) {
             $nbr = 0;
             foreach ($valeur_1 as $cle_2 => $valeur_2) {
                 if($cle_2=='valeur_a_dire_experts') {
@@ -317,11 +315,18 @@ class Inventaire extends Controller
                 }
                 $nbr++;
             }
-        }
+        }*/
+        $t = 0;
+        //$dat = DB::table('element_detenteurs')->where('nns', '=', $elt->id)->where('date_mise_en_service', '=', $annee)->get();
+        foreach($liste as $d) {
+            if($d->valeur_a_dire_experts != null){
+                $t = $t + (int)$d->valeur_a_dire_experts * (int)$d->quantite;
+            }
+        } 
         //echo $liste;
         $file_name = date("Y.m.d")."_ListeDetenteur.pdf";
         
-        $montant = (string)$nb;
+        $montant = (string)$t;  
         //asLetters(200000);
         $data = [
             'title' => 'FICHE DE DETENTEUR',
@@ -331,7 +336,7 @@ class Inventaire extends Controller
             'lib_ville' => $lib_ville,
             'lib_site' => $lib_site,
             'det' => $det,
-            'montant' => $montant,
+            'montant' => $this->numberToWord($montant),
         ];
 
 
@@ -346,81 +351,7 @@ class Inventaire extends Controller
         // return response($$file_name)->header('Content-Type', 'application/javascript');
     }
 
-    public static function asLetters($number) {
-        $convert = explode('.', $number);
-        $num[17] = array('zero', 'un', 'deux', 'trois', 'quatre', 'cinq', 'six', 'sept', 'huit',
-                         'neuf', 'dix', 'onze', 'douze', 'treize', 'quatorze', 'quinze', 'seize');
-                        
-        $num[100] = array(20 => 'vingt', 30 => 'trente', 40 => 'quarante', 50 => 'cinquante',
-                          60 => 'soixante', 70 => 'soixante-dix', 80 => 'quatre-vingt', 90 => 'quatre-vingt-dix');
-                                        
-        if (isset($convert[1]) && $convert[1] != '') {
-          return self::asLetters($convert[0]).' et '.self::asLetters($convert[1]);
-        }
-        if ($number < 0) return 'moins '.self::asLetters(-$number);
-        if ($number < 17) {
-          return $num[17][$number];
-        }
-        elseif ($number < 20) {
-          return 'dix-'.self::asLetters($number-10);
-        }
-        elseif ($number < 100) {
-          if ($number%10 == 0) {
-            return $num[100][$number];
-          }
-          elseif (substr($number, -1) == 1) {
-            if( ((int)($number/10)*10)<70 ){
-              return self::asLetters((int)($number/10)*10).'-et-un';
-            }
-            elseif ($number == 71) {
-              return 'soixante-et-onze';
-            }
-            elseif ($number == 81) {
-              return 'quatre-vingt-un';
-            }
-            elseif ($number == 91) {
-              return 'quatre-vingt-onze';
-            }
-          }
-          elseif ($number < 70) {
-            return self::asLetters($number-$number%10).'-'.self::asLetters($number%10);
-          }
-          elseif ($number < 80) {
-            return self::asLetters(60).'-'.self::asLetters($number%20);
-          }
-          else {
-            return self::asLetters(80).'-'.self::asLetters($number%20);
-          }
-        }
-        elseif ($number == 100) {
-          return 'cent';
-        }
-        elseif ($number < 200) {
-          return self::asLetters(100).' '.self::asLetters($number%100);
-        }
-        elseif ($number < 1000) {
-          return self::asLetters((int)($number/100)).' '.self::asLetters(100).($number%100 > 0 ? ' '.self::asLetters($number%100): '');
-        }
-        elseif ($number == 1000){
-          return 'mille';
-        }
-        elseif ($number < 2000) {
-          return self::asLetters(1000).' '.self::asLetters($number%1000).' ';
-        }
-        elseif ($number < 1000000) {
-          return self::asLetters((int)($number/1000)).' '.self::asLetters(1000).($number%1000 > 0 ? ' '.self::asLetters($number%1000): '');
-        }
-        elseif ($number == 1000000) {
-          return 'millions';
-        }
-        elseif ($number < 2000000) {
-          return self::asLetters(1000000).' '.self::asLetters($number%1000000);
-        }
-        elseif ($number < 1000000000) {
-          return self::asLetters((int)($number/1000000)).' '.self::asLetters(1000000).($number%1000000 > 0 ? ' '.self::asLetters($number%1000000): '');
-        }
-      }
-        
+    
     public function filtreData(Request $request) 
     {
         $region = $request->get('region');
@@ -475,262 +406,64 @@ class Inventaire extends Controller
                                           'nommen_f'=> $nommen, 'ammort_f'=> $ammort, 'villes' => $villes, 'sites' => $sites]); 
         
     }
-
-    function int2str($a)
-{
-$convert = explode('.',$a);
-if (isset($convert[1]) && $convert[1]!=''){
-return int2str($convert[0]).'Dinars'.' et '.int2str($convert[1]).'Centimes' ;
-}
-if ($a<0) return 'moins '.int2str(-$a);
-if ($a<17){
-switch ($a){
-case 0: return 'zero';
-case 1: return 'un';
-case 2: return 'deux';
-case 3: return 'trois';
-case 4: return 'quatre';
-case 5: return 'cinq';
-case 6: return 'six';
-case 7: return 'sept';
-case 8: return 'huit';
-case 9: return 'neuf';
-case 10: return 'dix';
-case 11: return 'onze';
-case 12: return 'douze';
-case 13: return 'treize';
-case 14: return 'quatorze';
-case 15: return 'quinze';
-case 16: return 'seize';
-}
-} else if ($a<20){
-return 'dix-'.int2str($a-10);
-} else if ($a<100){
-if ($a%10==0){
-switch ($a){
-case 20: return 'vingt';
-case 30: return 'trente';
-case 40: return 'quarante';
-case 50: return 'cinquante';
-case 60: return 'soixante';
-case 70: return 'soixante-dix';
-case 80: return 'quatre-vingt';
-case 90: return 'quatre-vingt-dix';
-}
-} elseif (substr($a, -1)==1){
-if( ((int)($a/10)*10)<70 ){
-return int2str((int)($a/10)*10).'-et-un';
-} elseif ($a==71) {
-return 'soixante-et-onze';
-} elseif ($a==81) {
-return 'quatre-vingt-un';
-} elseif ($a==91) {
-return 'quatre-vingt-onze';
-}
-} elseif ($a<70){
-return int2str($a-$a%10).'-'.int2str($a%10);
-} elseif ($a<80){
-return int2str(60).'-'.int2str($a%20);
-} else{
-return int2str(80).'-'.int2str($a%20);
-}
-} else if ($a==100){
-return 'cent';
-} else if ($a<200){
-return int2str(100).' '.int2str($a%100);
-} else if ($a<1000){
-return int2str((int)($a/100)).' '.int2str(100).' '.int2str($a%100);
-} else if ($a==1000){
-return 'mille';
-} else if ($a<2000){
-return int2str(1000).' '.int2str($a%1000).' ';
-} else if ($a<1000000){
-return int2str((int)($a/1000)).' '.int2str(1000).' '.int2str($a%1000);
-}
-else if ($a==1000000){
-return 'millions';
-}
-else if ($a<2000000){
-return int2str(1000000).' '.int2str($a%1000000).' ';
-}
-else if ($a<1000000000){
-return int2str((int)($a/1000000)).' '.int2str(1000000).' '.int2str($a%1000000);
-}
-}
-
-    function int2alpha($number, $root = true)
-{
-    $number = (int)$number;
-    if($number >= 1000)
+    public function numberToWord($num = '')
     {
-        $num_arr = array();
-        for($i = strlen("$number"); $i > 0; $i -= 3);
+        $num    = ( string ) ( ( int ) $num );
+        
+        if( ( int ) ( $num ) && ctype_digit( $num ) )
         {
-            $j = ($i > 3) ? $i - 3 : 0;
-            array_unshift($num_arr, substr("$number", $j, 3));
-        }
-        $num_arr = array_map(create_function('$a', 'return int2alpha($a, false);'), $num_arr);
-        $output = '';
-        while(count($num_arr) > 0)
-        {
-            $output .= ' ' . array_shift($num_arr);
-            if(count($num_arr) > 0)
+            $words  = array( );
+             
+            $num    = str_replace( array( ',' , ' ' ) , '' , trim( $num ) );
+             
+            $list1  = array('','un','deux','trois','quatre','cinq','six','sept',
+                'huit','neuf','dix','onze','douze','treize','quatorze',
+                'quinze','seize','dix-sept','dix-huit','dix-neuf');
+             
+            $list2  = array('','dix','vingt','trente','quarente','cinquante','soixante',
+                'soixante-dix','quatre-vingt','quatre-vingt-dix','cent');
+             
+            $list3  = array('','mille(s)','million(s)','milliard(s)','trillion',
+                'quadrillion','quintillion','sextillion','septillion',
+                'octillion','nonillion','decillion','undecillion',
+                'duodecillion','tredecillion','quattuordecillion',
+                'quindecillion','sexdecillion','septendecillion',
+                'octodecillion','novemdecillion','vigintillion');
+             
+            $num_length = strlen( $num );
+            $levels = ( int ) ( ( $num_length + 2 ) / 3 );
+            $max_length = $levels * 3;
+            $num    = substr( '00'.$num , -$max_length );
+            $num_levels = str_split( $num , 3 );
+             
+            foreach( $num_levels as $num_part )
             {
-                switch(count($num_arr) % 3)
-                {
-                    case 1:
-                        $output .= ' mille';
-                        break;
- 
-                    case 2:
-                        $output .= ' million';
-                        break;
- 
-                    default:
-                        $output .= ' milliard';
-                }
+                $levels--;
+                $hundreds   = ( int ) ( $num_part / 100 );
+                $hundreds   = ( $hundreds ? ' ' . $list1[$hundreds] . ' Cent' . ( $hundreds == 1 ? '' : 's' ) . ' ' : '' );
+                $tens       = ( int ) ( $num_part % 100 );
+                $singles    = '';
+                 
+                if( $tens < 20 ) { $tens = ( $tens ? ' ' . $list1[$tens] . ' ' : '' ); } else { $tens = ( int ) ( $tens / 10 ); $tens = ' ' . $list2[$tens] . ' '; $singles = ( int ) ( $num_part % 10 ); $singles = ' ' . $list1[$singles] . ' '; } $words[] = $hundreds . $tens . $singles . ( ( $levels && ( int ) ( $num_part ) ) ? ' ' . $list3[$levels] . ' ' : '' ); } $commas = count( $words ); if( $commas > 1 )
+            {
+                $commas = $commas - 1;
             }
-        }
-    }
-    elseif($number >= 100)
-    {
-        $centaines = int2alpha($number / 100);
-        $reste = int2alpha($number % 100);
-        $output = implode(' ', array(($centaines == 'un') ? 'cent' : "$centaines cent", $reste));
-    }
-    elseif($number > 80)
-    {
-        $number -= 80;
-        $output = 'quatre-vingt-' . int2alpha($number);
-    }
-    elseif($number == 80)
-    {
-        $output = 'quatre-vingt';
-    }
-    elseif($number > 61)
-    {
-        $number -= 60;
-        $output = 'soixante-' . int2alpha($number);
-    }
-    elseif($number >= 20)
-    {
-        $dixaine = $number / 10;
-        $unite = $number % 10;
-        switch($dixaine)
-        {
-            case 2:
-                $output = 'vingt';
-                break;
- 
-            case 3:
-                $output = 'trente';
-                break;
- 
-            case 4:
-                $output = 'quarante';
-                break;
- 
-            case 5:
-                $output = 'cinquante';
-                break;
- 
-            case 6:
-                $output = 'soixante';
-                break;
-        }
-        switch($unite)
-        {
-            case 0:
-                break;
- 
-            case 1:
-                $output .= ' et un';
-                break;
              
-            default:
-                $output .= "-$unite";
-        }
-    }
-    elseif($number > 16)
-    {
-        $output = 'dix-'.int2alpha($number % 10);
-    }
-    else
-    {
-        switch($number)
-        {
-            case 0:
-                if($root)
-                    $output = 'zéro';
-                else
-                    $output = '';
-                break;
- 
-            case 1:
-                $output = 'un';
-                break;
- 
-            case 2:
-                $output = 'deux';
-                break;
- 
-            case 3:
-                $output = 'trois';
-                break;
- 
-            case 4:
-                $output = 'quatre';
-                break;
- 
-            case 5:
-                $output = 'cinq';
-                break;
- 
-            case 6:
-                $output = 'six';
-                break;
- 
-            case 7:
-                $output = 'sept';
-                break;
- 
-            case 8:
-                $output = 'huit';
-                break;
- 
-            case 9:
-                $output = 'neuf';
-                break;
- 
-            case 10:
-                $output = 'dix';
-                break;
- 
-            case 11:
-                $output = 'onze';
-                break;
+            $words  = implode( ', ' , $words );
              
-            case 12:
-                $output = 'douze';
-                break;
- 
-            case 13:
-                $output = 'treize';
-                break;
- 
-            case 14:
-                $output = 'quatorze';
-                break;
- 
-            case 15:
-                $output = 'quinze';
-                break;
- 
-            case 16:
-                $output = 'seize';
-                break;
+            $words  = trim( str_replace( ' ,' , ',' , ucwords( $words ) )  , ', ' );
+            if( $commas )
+            {
+                $words  = str_replace( ',' , ' ' , $words );
+            }
+             
+            return $words;
         }
+        else if( ! ( ( int ) $num ) )
+        {
+            return 'Zero';
+        }
+        return '';
     }
-    return $output;
-}
+  
 }

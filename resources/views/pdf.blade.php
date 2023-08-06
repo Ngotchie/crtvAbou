@@ -92,7 +92,7 @@
                         <td>{{ $detenteur->type_dimmobilisation }}</td>
                         <td>{{ $detenteur->date_acquisition }}</td>
                         <td>{{ $detenteur->quantite }}</td>
-                        <td>{{ $detenteur->valeur_origine }}</td>
+                        <td>{{ $detenteur->valeur_a_dire_experts }}</td>
                         <td>{{ $detenteur->valeur }}</td>
                         <td>{{ $detenteur->date_mise_en_service }}</td>
                         <td>{{ $detenteur->departement }}</td>
