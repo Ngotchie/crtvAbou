@@ -20,8 +20,8 @@ class CompteGestionController extends Controller
             $t = 0;
             $data = DB::table('element_detenteurs')->where('nns', '=', $elt->id)->where('date_mise_en_service', '=', $annee)->get();
             foreach($data as $d) {
-                if($d->valeur_selon_fiche != null){
-                    $t = $t + (int)$d->valeur_selon_fiche * (int)$d->quantite;
+                if($d->valeur_a_dire_experts != null){
+                    $t = $t + (int)$d->valeur_a_dire_experts * (int)$d->quantite;
                 }
             } 
             $elt->total = $t;
