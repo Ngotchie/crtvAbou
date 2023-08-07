@@ -95,6 +95,9 @@
                     
                     <!--<a href="{{url('exportExcel')}}" class="btn btn-primary btn-sm" style="margin-left:5px">Export Excel</a>-->
                     <a href="javascript:exportExcel()" class="btn btn-primary btn-sm" style="margin-left:5px">Export Excel</a>
+
+                    <!--<a href="{{url('exportExcel')}}" class="btn btn-third btn-sm" style="margin-left:5px">Export Excel</a>-->
+                    <a href="javascript:printInventaire()" class="btn btn-third btn-sm" style="margin-left:5px">Export Inventaire</a>
             </div>
             <table id="datatablesSimple">
                 <thead>
@@ -113,8 +116,8 @@
                         <th>Type d'Immobilisation</th>
                         <th>Number</th>
                         <th>Qte</th>
-                        <th>P.U</th>
-                        <th>Valeur</th>
+                        <th>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspP.U&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</th>
+                        <th>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspValeur&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</th>
                         <th>Taux d'Ammortisement</th>
                         <th>Durée de Vie</th>
                         <th>Date d'Ammortissement</th>
@@ -138,8 +141,8 @@
                         <th>Type d'Immobilisation</th>
                         <th>Number</th>
                         <th>Qte</th>
-                        <th>P.U</th>
-                        <th>Valeur</th>
+                        <th>&nbsp&nbsp&nbsp&nbsp&nbsp&nbspP.U&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</th>
+                        <th>&nbsp&nbsp&nbsp&nbsp&nbsp&nbspValeur&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</th>
                         <th>Taux d'Ammortisement</th>
                         <th>Durée de Vie</th>
                         <th>Date d'Ammortissement</th>
@@ -165,7 +168,8 @@
                         <td>{{ $detenteur->number }}</td>
                         <td>{{ $detenteur->valeur_a_dire_experts }}</td>
                         <td>{{ $detenteur->quantite }}</td>
-                        <td>{{ $detenteur->valeur_origine }}</td>
+                        <td>{{ number_format($detenteur->valeur_origine, 0, ',', ' ') }}</td>
+                        <td>{{ number_format($detenteur->valeur_a_dire_experts, 0, ',', ' ') }}</td>
                         <td>{{ $detenteur->taux_amortissement }}</td>
                         <td>{{ $detenteur->duree_de_vie }}</td>
                         <td>{{ $detenteur->date_amortissement }}</td>
@@ -404,8 +408,9 @@
                 a.remove();  //afterwards we remove the element again         
             }).catch(error => console.error(error)); 
     }
-    
-      async function exportExcel() {
+
+
+    async function printInventaire() {
         var currentDate = new Date().toJSON().slice(0, 10);
 
         var $r = $("#region").val();
@@ -415,15 +420,14 @@
         var $t = $("#typeImmo").val();
         var $n = $("#nommen").val();
         var $a = $("#ammort").val();
-       
         var $r_l = $r != "-1" ? $( "#region option:selected" ).text() : "DIRECTION GENERLE DE LA CRTV - DEPARTMENT DE LA COMPTABILITE MATIERE";
         var $v_l = $v != "-1" ? '_'+ $( "#ville option:selected" ).text() : "";
         var $s_l = $s != "-1" ? '_'+ $( "#site option:selected" ).text() : "";
         var $d_l = $d != "-1" ? '_'+ $( "#detenteur option:selected" ).text() : "";
         
-        var $l = $r_l + $v_l + $s_l + "_FD"+$d_l;
+        var $l = $r_l + $v_l + $s_l + "_IV"+$d_l;
         
-        await fetch('/public/exportExcel', {
+        await fetch('/printInventaire', {
             method: "POST", 
             cache: "no-cache",
             headers: {
@@ -444,15 +448,64 @@
             .then(blob => {
                 var url = window.URL.createObjectURL(blob);
                 var a = document.createElement('a');
-                console.log("----"+a);
                 a.href = url;
-                // a.download = $n+ currentDate +".xls";
-                a.download = $l +".xls";
+                a.download = $l +".pdf";
                 document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
                 a.click();    
                 a.remove();  //afterwards we remove the element again         
             }).catch(error => console.error(error)); 
     }
+    
+    async function exportExcel() {
+    var currentDate = new Date().toJSON().slice(0, 10);
+
+    var $r = $("#region").val();
+    var $v = $("#ville").val();
+    var $s = $("#site").val();
+    var $d = $("#detenteur").val();
+    var $t = $("#typeImmo").val();
+    var $n = $("#nommen").val();
+    var $a = $("#ammort").val();
+    
+    var $r_l = $r != "-1" ? $( "#region option:selected" ).text() : "DIRECTION GENERLE DE LA CRTV - DEPARTMENT DE LA COMPTABILITE MATIERE";
+    var $v_l = $v != "-1" ? '_'+ $( "#ville option:selected" ).text() : "";
+    var $s_l = $s != "-1" ? '_'+ $( "#site option:selected" ).text() : "";
+    var $d_l = $d != "-1" ? '_'+ $( "#detenteur option:selected" ).text() : "";
+    
+    var $l = $r_l + $v_l + $s_l + "_FD"+$d_l;
+    
+    await fetch('/public/exportExcel', {
+        method: "POST", 
+        cache: "no-cache",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+        },
+        body: JSON.stringify({
+            region: $r,
+            ville: $v,
+            site: $s,
+            detenteur: $d,
+            typeImmo: $t,
+            nommen: $n,
+            ammort: $a,
+        })
+    }).then(response => response.blob())
+        .then(blob => {
+            var url = window.URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            console.log("----"+a);
+            a.href = url;
+            // a.download = $n+ currentDate +".xls";
+            a.download = $l +".xls";
+            document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+            a.click();    
+            a.remove();  //afterwards we remove the element again         
+        }).catch(error => console.error(error)); 
+    }
+
+
     async function region_func() {
         var $v = $("#region").val();
         if($v !== "-1") {
